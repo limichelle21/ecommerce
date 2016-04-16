@@ -11,22 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160415010312) do
+ActiveRecord::Schema.define(version: 20160416143125) do
 
   create_table "order_lines", force: :cascade do |t|
     t.integer  "quantity"
     t.decimal  "price"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "product_id"
   end
+
+  add_index "order_lines", ["product_id"], name: "index_order_lines_on_product_id"
 
   create_table "orders", force: :cascade do |t|
     t.decimal  "total"
     t.boolean  "completed"
     t.datetime "date_paid"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "order_line_id"
+    t.integer  "customer_id"
   end
+
+  add_index "orders", ["customer_id"], name: "index_orders_on_customer_id"
+  add_index "orders", ["order_line_id"], name: "index_orders_on_order_line_id"
 
   create_table "products", force: :cascade do |t|
     t.string   "title"
@@ -36,7 +44,10 @@ ActiveRecord::Schema.define(version: 20160415010312) do
     t.integer  "count"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "owner_id"
   end
+
+  add_index "products", ["owner_id"], name: "index_products_on_owner_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
