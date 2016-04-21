@@ -21,7 +21,7 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new
     @product = products.build(product_params)
-    @product.user = owner
+    @product.user = current_user
 
     if @product.save
       flash[:notice] = "Product was added to store"
@@ -67,7 +67,7 @@ class ProductsController < ApplicationController
   def authorize_user
     product = Product.find(params[:id])
 
-    unless current_user == product.owner || current_user.admin?
+    unless current_user == current_user.owner? || current_user.admin?
       flash[:alert] = "You must be authorized to do that."
       redirect_to product 
     end

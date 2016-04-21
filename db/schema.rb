@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160419063149) do
+ActiveRecord::Schema.define(version: 20160421145656) do
 
   create_table "order_lines", force: :cascade do |t|
     t.integer  "quantity"
-    t.decimal  "price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "price_in_cents"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "product_id"
     t.integer  "order_id"
   end
@@ -26,11 +26,11 @@ ActiveRecord::Schema.define(version: 20160419063149) do
   add_index "order_lines", ["product_id"], name: "index_order_lines_on_product_id"
 
   create_table "orders", force: :cascade do |t|
-    t.decimal  "total"
+    t.integer  "price_in_cents"
     t.boolean  "completed"
     t.datetime "date_paid"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "customer_id"
   end
 
@@ -40,10 +40,10 @@ ActiveRecord::Schema.define(version: 20160419063149) do
     t.string   "title"
     t.text     "description"
     t.integer  "sku"
-    t.decimal  "price"
+    t.integer  "price_in_cents"
     t.integer  "count"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "owner_id"
   end
 

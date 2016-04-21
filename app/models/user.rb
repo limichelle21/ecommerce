@@ -7,4 +7,8 @@ class User < ActiveRecord::Base
     def admin?
     	type == 'Admin'
     end
+
+    def owner?
+    	type =='Owner'
+    end
 end
