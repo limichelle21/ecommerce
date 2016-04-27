@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
 
-  before_action :authorize_user, except: [:show]
+  # before_action :authorize_user, except: [:show]
 
   def index
     @products = Product.all
@@ -14,14 +14,23 @@ class ProductsController < ApplicationController
     @product = Product.new
   end
 
+
+
+
   def edit
-    @product = Product.find(params[:id])
+    @product = Product.find(paramas[:id])
+    authorize(product)
+    
   end
+
+
+
 
   def create
     @product = Product.new
+    authorize(product)
     @product = products.build(product_params)
-    @product.user = current_user
+    # @product.user = current_user
 
     if @product.save
       flash[:notice] = "Product was added to store"
@@ -32,8 +41,12 @@ class ProductsController < ApplicationController
     end
   end
 
+
+
   def update
     @product = Product.find(params[:id])
+    authorize(product)
+    
     @product.assign_attributes(product_params)
 
     if @product.save
@@ -45,8 +58,11 @@ class ProductsController < ApplicationController
     end
   end
 
+
+
   def destroy
     @product = Product.find(params[:id])
+    authorize(product)
 
     if @product.destroy
       flash[:notice] = "\"#{product.title}\" was deleted successfully."
@@ -64,11 +80,13 @@ class ProductsController < ApplicationController
     params.require(:product).permit(:title, :description, :sku, :price, :count)
   end
 
-  def authorize_user
-    product = Product.find(params[:id])
 
-    unless current_user == current_user.owner? || current_user.admin?
-      flash[:alert] = "You must be authorized to do that."
-      redirect_to product 
-    end
+
+  # def authorize_user
+  #   product = Product.find(params[:id])
+
+  #   unless current_user == current_user.owner? || current_user.admin?
+  #     flash[:alert] = "You must be authorized to do that."
+  #     redirect_to product 
+  #   end
 end
