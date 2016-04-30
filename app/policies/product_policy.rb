@@ -1,13 +1,20 @@
 class ProductPolicy < ApplicationPolicy 
 
-	def initialize(owner)
-		@owner = owner
-	end
-
 	def index?
 		true
 	end
 
+	def show?
+		true
+	end
+
+	attr_reader :owner, :product
+	# why attr_reader, not attr_accessor? because there's no need to write/set variables?
+
+	def initialize(owner, product)
+		@owner = owner
+		@product = product
+	end
 
 
 	def new?
@@ -29,8 +36,6 @@ class ProductPolicy < ApplicationPolicy
 	def destroy?
 		is_owner? 
 	end
-
-
 
 
 	private

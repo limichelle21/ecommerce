@@ -12,24 +12,21 @@ class ProductsController < ApplicationController
 
   def new
     @product = Product.new
+    authorize(product)
   end
-
-
 
 
   def edit
     @product = Product.find(paramas[:id])
     authorize(product)
-    
   end
-
-
 
 
   def create
     @product = Product.new
-    authorize(product)
     @product = products.build(product_params)
+    authorize(product)
+
     # @product.user = current_user
 
     if @product.save
