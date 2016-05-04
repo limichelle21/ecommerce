@@ -8,13 +8,15 @@ class ProductPolicy < ApplicationPolicy
 		true
 	end
 
-	attr_reader :owner, :product
-	# why attr_reader, not attr_accessor? because there's no need to write/set variables?
+	attr_reader :user, :product
+	# why attr_reader, not attr_accessor? because there's no need to write/set variables? Policy to give read-only access
 
-	def initialize(owner, product)
-		@owner = owner
+	def initialize(user, product)
+		@user = user
 		@product = product
 	end
+
+	#current_user is auto-passed through as user (Pundit)
 
 
 	def new?
@@ -30,11 +32,11 @@ class ProductPolicy < ApplicationPolicy
 	end
 
 	def update?
-		is_owner? 
+		is_owner? && product.owner == user
 	end
 
 	def destroy?
-		is_owner? 
+		is_owner? && product.owner == user
 	end
 
 

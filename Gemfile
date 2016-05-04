@@ -33,6 +33,14 @@ gem 'pry'
 
 gem 'pundit'
 
+# FriendlyID for string IDs in URL
+gem 'friendly_id', '~> 5.1.0'
+
+#AdminLTE bootstrap theme for backend
+gem 'adminlte-rails'
+gem 'adminlte-generators'
+
+
 gem 'devise'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

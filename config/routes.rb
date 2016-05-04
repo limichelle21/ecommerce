@@ -1,9 +1,20 @@
 Rails.application.routes.draw do
 
-  resources :products
-  resources :order_lines
-  resources :orders
+namespace :dashboard do 
+  root 'products#index'
+  resources :products, only: [:new, :create, :update, :destroy]
+  resources :orders, only: [:update, :destroy]
+  resources :order_lines, only: [:update, :destroy]
+end
 
+namespace :customer do 
+  #  where should customer page root to?
+  resources :orders, only: [:new, :create, :update]
+  resources :order_lines, only: [:new, :create, :update, :destroy]
+end
+
+resources :products, only: [:index, :show]
+ 
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
