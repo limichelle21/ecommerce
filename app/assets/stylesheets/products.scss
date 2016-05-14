@@ -1,3 +1,30 @@
 // Place all the styles related to the Products controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+@media screen {
+	.thumbnail-gallery {
+	display: table;
+	border-collapse: collapse;
+	width: 100%;
+	}
+
+	.thumbnail-gallery > div {
+	display: table-row;
+	}
+
+	.thumbnail-gallery .thumbnail {
+	display: table-cell;
+	border: 1px solid #333333;
+	}
+}
+
+
+@media screen and (max-width: 640px) {
+	.thumbnail-gallery,
+	.thumbnail-gallery > div,
+	.thumbnail-gallery .thumbnail {
+		display: block;
+		width: 100%;
+	}
+}

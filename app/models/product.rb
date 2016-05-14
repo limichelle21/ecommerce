@@ -3,16 +3,18 @@ class Product < ActiveRecord::Base
 	extend FriendlyId
 	friendly_id :title, use: :slugged
 
-	belongs_to :owner
+	belongs_to :store
 	has_many :order_lines
 
 
-	validates :owner, presence: true
+	validates :store, presence: true
 	validates :title, length: { minimum: 5}, presence: true
 	validates :description, length: { minimum: 10}, presence: true
 	validates :sku, presence: true, numericality: { only_integer: true }
 	validates :price, presence: true, numericality: true
 	validates :count, presence: true, numericality: { only_integer: true}
+
+	# Add a boolean :active to indicate if product is live or not?
 
 	def price # getter for rent in cents
 		read_attribute(:price_in_cents) / 100.0
