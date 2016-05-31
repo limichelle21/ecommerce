@@ -2,29 +2,23 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+.thumbnail{
+	width: 30%;
+	display: block;
+	float: left
+}
+
+.img-responsive{
+	margin: 20px
+}
+
+
 @media screen {
-	.thumbnail-gallery {
+	.thumbnail {
 	display: table;
 	border-collapse: collapse;
 	width: 100%;
 	}
-
-	.thumbnail-gallery > div {
-	display: table-row;
-	}
-
-	.thumbnail-gallery .thumbnail {
-	display: table-cell;
-	border: 1px solid #333333;
-	}
 }
 
-
-@media screen and (max-width: 640px) {
-	.thumbnail-gallery,
-	.thumbnail-gallery > div,
-	.thumbnail-gallery .thumbnail {
-		display: block;
-		width: 100%;
-	}
-}

@@ -1,31 +1,32 @@
 Rails.application.routes.draw do
 
-namespace :dashboard do 
-  resources :stores, only: [:new, :create, :show, :update] do
-    resources :products, only: [:new, :create, :update, :destroy]
-    resources :orders, only: [:update, :destroy]
-    resources :order_lines, only: [:update, :destroy]
-  end
-end
 
-namespace :customer do 
-  #  where should customer page root to? - to the main store page
-  resources :stores, only: [:show] do
-    resources :orders, only: [:new, :create, :update]
-    resources :order_lines, only: [:new, :create, :update, :destroy]
+  namespace :dashboard do 
+    resources :stores, only: [:new, :create, :show, :update] do
+      resources :products
+      resources :orders, only: [:update, :destroy]
+      resources :order_lines, only: [:update, :destroy]
+    end
   end
-end
-
-resources :stores, only: [:show] do
-  resources :products, only: [:index, :show]
-end
 
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
+  get ':id', to: 'store#show' # ecommerce.com/matts-store
+
   root 'welcome#index'
+
+  resources :stores, only: [:show], path: '/' do 
+    resources :products, only: [:index, :show]
+    resources :orders, only: [:index, :new, :create, :update]
+    resources :order_lines, only: [:new, :create, :update, :destroy]
+  end   
+    # ecommerce.com/matts-store/products
+    # ecommerce.com/matts-store/cart
+    # ecommerce.com/matts-store/checkout
+    # ecommerce.com/matts-store/orders/1  - history
 
 
 # class CustomDomainConstraint

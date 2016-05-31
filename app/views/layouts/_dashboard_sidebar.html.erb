@@ -3,9 +3,10 @@
   <div class="user-panel">
     <div class="pull-left image">
       <img src="/img/avatar3.png" class="img-circle" alt="User Image" />
+    
     </div>
     <div class="pull-left info">
-      <p>Hello, Jane</p>
+      <p>Hello, @user.name</p>
 
       <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
     </div>
@@ -26,9 +27,9 @@
       <i class="fa fa-dashboard"></i> <span>Dashboard</span>
     <% end %>
     <%= treeview_link 'Lots of links here' do %>
-      <%= nav_link "#" do %>
+      <%= nav_link dashboard_store_products_path do %>
         <i class="fa fa-angle-double-right"></i>
-        One Way
+        All Products
       <% end %>
       <%= nav_link "#" do %>
         <i class="fa fa-angle-double-right"></i>

@@ -8,6 +8,6 @@ class Store < ActiveRecord::Base
 
 	validates :owner, presence: true
 	validates :name, presence: true, uniqueness: true
-	validates_exclusion_of :name, in: %w[www ecommerce]
+	validates_exclusion_of :name, in: %w[www ecommerce contactus faq terms]
 
 end

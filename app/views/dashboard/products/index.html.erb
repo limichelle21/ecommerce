@@ -1,20 +1,4 @@
-<div id="grid products"></div>
+
 
 <!--want a grid of products, each grid item = image, title, price. Default grid of 4, but table should be responsive -->
-<!-- use CSS media queries to detect if screen is smaller than -->
 
-
-<% @products.in_groups_of(4, false) each do |group| %>
-<div class="row">
-	<% group.each do |product| %>
-	<div class="thumbnail-gallery">
-		<div class="thumbnail"> <!-- div class col-md-3 -->
-			<%= image_tag(product.image_url, class: "img-responsive") %>
-			<h4><%= product.name %></h4>
-			<p><%= product.price %></p>
-			<%= button_to 'Add to Cart', ______path(product_id: product), class: 'btn btn-info btn-sm', remote: true %>
-		</div>
-	</div>
-	<% end %>
-</div>
-<% end %>
