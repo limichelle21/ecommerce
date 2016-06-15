@@ -1,4 +1,25 @@
+<div class="container">
+    <div class="well well-sm">
+        <strong>All Products</strong>
+        <div class="btn-group">
+            <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
+            </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
+                class="glyphicon glyphicon-th"></span>Grid</a>
+        </div>
+    </div>
 
+    <div class="row">
+    	<% @products.each do |product| %>
+    	<div class="media">
+    		<div class="media-body">
+    			<%= link_to product.title, product %>
+    			<%= link_to product.price, product %>
+	            <%= button_to 'Product Details', dashboard_store_product_path(product_id: product), class: 'btn btn-success', remote: true %>
+	           
+            </div>
+        </div>
+        <% end %>
+    </div>
+</div>
 
-<!--want a grid of products, each grid item = image, title, price. Default grid of 4, but table should be responsive -->
 

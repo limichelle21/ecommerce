@@ -1,0 +1,12 @@
+<!-- create a form field for new products -->
+
+<h1>New Product </h1>
+
+<div class="row">
+	<div class="col-md-4">
+		<h4>Input New Product Details</h4>
+	</div>
+	<div class="col-md-8">
+		<%= render partial: 'product', locals: { store: @store, product: @product } %>
+	</div>
+</div>

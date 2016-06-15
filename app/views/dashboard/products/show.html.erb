@@ -1,1 +1,10 @@
-<!-- Product show page: image, title, 
+
+<div class="container">
+	<div class="media-body">
+		<%= link_to @product.title %>
+		<%= link_to @product.description %>
+		<%= link_to @product.price %>
+        <%= button_to 'Edit Product', edit_dashboard_store_product_path(product_id: @product), class: 'btn btn-success', remote: true %>
+        <%= button_to 'Delete Product', dashboard_store_product_path(product_id: @product), class: 'btn btn-success', remote: true %>
+    </div>
+</div>
