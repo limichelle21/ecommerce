@@ -1,7 +1,15 @@
 class Dashboard::OrdersController < DashboardController
 
+#order belongs to a store
+
+	def index
+		@store = Store.friendly.find(params[:store_id])
+		@orders = @store.orders.all
+	end
+
 	def show
 		@order = Order.find(params[:id])
+		@order_lines = current_order.order_lines #does this belong here?
 	end
 
 	def edit

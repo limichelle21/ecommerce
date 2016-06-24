@@ -2,7 +2,8 @@ class Dashboard::ProductsController < DashboardController
 
 
   def index
-    @products = Product.all
+    @store = Store.friendly.find(params[:store_id])
+    @products = @store.products.all
   end
 
   def show
@@ -10,6 +11,7 @@ class Dashboard::ProductsController < DashboardController
   end
 
   def new
+    @store = Store.friendly.find(params[:store_id])
     @product = Product.new
     authorize @product
   end
@@ -22,7 +24,10 @@ class Dashboard::ProductsController < DashboardController
 
 
   def create
-    @product = Product.new(product_params)
+    @product = Product.new
+    @store = Store.friendly.find(params[:store_id])
+    @product = @store.products.build(product_params)
+
     authorize @product
 
     if @product.save
@@ -44,7 +49,7 @@ class Dashboard::ProductsController < DashboardController
 
     if @product.save
       flash[:notice] = "Product was updated."
-      redirect_to @product
+      redirect_to [@product.store, @product]
     else
       flash[:error] = "There was an error saving the product. Please try again."
       render :edit

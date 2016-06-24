@@ -10,6 +10,7 @@ class Customer::OrderLinesController < CustomerController
   end
 
   def create
+
     @order_line = OrderLine.new(order_line_params)
     authorize @order_line
 
@@ -29,6 +30,7 @@ class Customer::OrderLinesController < CustomerController
 
 
   def update
+
     @order_line = OrderLine.find(params[:id])
     authorize @order_line
 

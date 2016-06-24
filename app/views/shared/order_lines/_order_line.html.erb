@@ -1,0 +1,6 @@
+<% @order_lines.each do |order_line| %>
+	<td><%= order_line.product.title %></td>
+	<td>Unit Price: <%= order_line.unit_price %></td>
+	<td><%= order_line.quantity %></td>
+	<td>Total Price: <%= order_line.total_price %></td>
+<% end %>

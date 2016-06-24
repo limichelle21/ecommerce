@@ -1,18 +1,13 @@
 <div class="container">
 	<div class="row">
-		<div class="col-md-6">
-			
+		<div class="col-md-6">			
 			<h2><%= @product.title %></h2>
-			<h5><%= @product.description %></h5>
+			<h4><%= @product.description %></h4>
+			<h4>Price: $<%= @product.price %></h4>
+			<h4><%= link_to "Add to Cart", :method => :post %></h4>
 		</div>
 		<div class="col-md-6">
 			<img class="img-responsive" src="http://placehold.it/400x250/000/fff" alt="" />
 		</div>
 	</div>
-	<div class="container">
-		<p>Price: $<%= @product.price %></p>
-		<h4><%= link_to "Add to Order", :method => :post %></h4>
-	</div>
-	
-
 </div>

@@ -7,6 +7,7 @@ class Dashboard::StoresController < DashboardController
 	end
 
 	def show
+		@store = Store.find(params[:id])
 	end
 
 	def update

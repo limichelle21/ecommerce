@@ -1,25 +1,42 @@
 <div class="container">
-    <div class="well well-sm">
-        <strong>All Products</strong>
-        <div class="btn-group">
-            <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
-            </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
-                class="glyphicon glyphicon-th"></span>Grid</a>
-        </div>
+    <div class="col-md-2">
+        <h2>All Products</h2>
     </div>
 
-    <div class="row">
-    	<% @products.each do |product| %>
-    	<div class="media">
-    		<div class="media-body">
-    			<%= link_to product.title, product %>
-    			<%= link_to product.price, product %>
-	            <%= button_to 'Product Details', dashboard_store_product_path(product_id: product), class: 'btn btn-success', remote: true %>
-	           
-            </div>
-        </div>
-        <% end %>
+    <div class="col-md-10">
+        <table>
+            <thead>
+                <tr>
+                    <th class="list-title">Item Name</th>
+                    <th class="list-title">Description</th>
+                    <th class="list-title">Image URL</th>
+                    <th class="list-title">Price</th>
+                    <th class="list-title">SKU</th>
+                    <th class="list-title">Product Details</th>
+                    <th class="list-title">Edit Product</th>
+                    <th class="list-title">Delete Product</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% @products.each do |product| %>
+                <tr>
+                    <td class="list-item"><%= product.title %></td>
+                    <td class="list-item"><%= product.description %></td>
+                    <td class="list-item">DISPLAY IMG</td>
+                    <td class="list-item"><%= product.price %></td>
+                    <td class="list-item"><%= product.sku %></td>
+                    <td class="list-item"><%= link_to 'Show', dashboard_store_product_path(@store.id, product.id) %></td>
+                    <td class="list-item"><%= link_to 'Edit', edit_dashboard_store_product_path(@store.id, product.id) %></td>
+                    <td class="list-item"><%= link_to 'Delete', dashboard_store_product_path(@store.id, product.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                </tr>
+                <% end %>
+            </tbody>
+        </table>
     </div>
+
+
+    
 </div>
 
 

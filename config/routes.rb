@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   namespace :dashboard do 
     resources :stores, only: [:new, :create, :show, :update] do
       resources :products
-      resources :orders, only: [:update, :destroy]
+      resources :orders, only: [:index, :show, :update, :destroy]
       resources :order_lines, only: [:update, :destroy]
     end
   end
@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  get ':id', to: 'store#show' # ecommerce.com/matts-store
+  get ':id', to: 'stores#show' # ecommerce.com/matts-store
 
   root 'welcome#index'
 

@@ -5,6 +5,7 @@ class Store < ActiveRecord::Base
 
 	belongs_to :owner
 	has_many :products
+	has_many :orders
 
 	validates :owner, presence: true
 	validates :name, presence: true, uniqueness: true

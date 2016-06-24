@@ -26,14 +26,18 @@
     <%= nav_link root_path do %>
       <i class="fa fa-dashboard"></i> <span>Dashboard</span>
     <% end %>
-    <%= treeview_link 'Lots of links here' do %>
-      <%= nav_link dashboard_store_products_path do %>
+    <%= treeview_link 'Links' do %>
+      <%= nav_link dashboard_store_products_path(@store.id) do %>
         <i class="fa fa-angle-double-right"></i>
         All Products
       <% end %>
-      <%= nav_link "#" do %>
+      <%= nav_link store_path(@store.id) do %>
         <i class="fa fa-angle-double-right"></i>
-        Another
+        Store
+      <% end %>
+      <%= nav_link  dashboard_store_orders_path(@store.id) do %>
+        <i class="fa fa-angle-double-right"></i>
+        Orders
       <% end %>
     <% end %>
   </ul>

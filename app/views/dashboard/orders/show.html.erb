@@ -1,0 +1,33 @@
+<div class="main">
+  <h1>Order Summary</h1>
+  	<div class="container">
+		<div class="col-md-3">
+  			<h2>Customer Information</h2>
+  			<%= render 'customer', customer: @order.customer %>
+  		</div>
+
+  		<div class="col-md-9">
+  			<h2>Items Ordered</h2>
+  			<table class="table table-striped">
+  				<thead>
+  					<tr>
+  						<th>Item Name</th>
+  						<th>Unit Price</th>
+  						<th>Quantity</th>
+  						<th>Total Price</th>
+  					</tr>
+  				</thead>
+
+  				<tbody>
+  					<% @order_lines.each do |order_line| %>
+  					<tr> 
+  						<%= render "shared/order_lines/order_line" %>
+  					</tr>
+  					<% end %>
+  				</tbody>
+  			</table>
+
+  		</div>
+  	</div>
+
+</div>
