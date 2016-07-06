@@ -1,0 +1,23 @@
+// Place all the styles related to the Stores controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.thumbnail {
+	padding: 10px 20px;
+	display: block;
+	float: left
+}
+
+.jumbotron {
+	height: 30em;
+}
+
+.jumbotron-secondary {
+	height: 20em;
+}
+
+h2 { 
+	font-style: italic;
+	text-align: center;
+	padding-bottom: 1em;
+}

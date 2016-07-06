@@ -5,13 +5,15 @@ class Customer::OrderLinesController < CustomerController
   end
 
   def new
+    @order = Order.find(params[:id])
     @order_line = OrderLine.new
     authorize @order_line
   end
 
   def create
-
-    @order_line = OrderLine.new(order_line_params)
+    @order_line = OrderLine.new
+    @order = Order.find([params[:id]])
+    @order_line = @order.order_lines.build(order_line_params)
     authorize @order_line
 
       if @order_line.save

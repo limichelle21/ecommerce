@@ -19,9 +19,9 @@
   				</thead>
 
   				<tbody>
-  					<% @order_lines.each do |order_line| %>
+  					<% @order.order_lines.each do |order_line| %>
   					<tr> 
-  						<%= render "shared/order_lines/order_line" %>
+  						<%= render "shared/order_lines/order_line", order_line: @order.order_line %>
   					</tr>
   					<% end %>
   				</tbody>

@@ -25,6 +25,14 @@
           <%= f.password_field :password_confirmation, autocomplete: "off" %>
         </div>
 
+        <div class="field">
+          <br />
+          <%= f.label :type, 'Owner', :value => 'owner' %>
+          <%= f.radio_button :type, 'owner' %>
+          <%= f.label :type, 'Customer', :value => 'customer' %>
+          <%= f.radio_button :type, 'customer' %>
+        </div>
+
         <div class="actions">
           <%= f.submit "Sign up" %>
         </div>

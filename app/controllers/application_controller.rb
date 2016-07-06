@@ -6,14 +6,22 @@ class ApplicationController < ActionController::Base
 
   # before_action :authenticate_user!
 
+  # before_action :redirect_dashboard
+
   before_filter :find_store
 
+  def current_order
+    @current_order ||= session[:current_order_id] && Order.find_by(id: session[:current_order_id])
+  end
 
-  	# do I need to create a "store" model? 
-  	# a Store would have a slug, and a subdomain belongs to slug.ecommerce.com
-  	# what does it mean to whitelist_subdomain?
+  helper_method :current_order
 
 
+  # def redirect_dashboard
+  #   redirect_to dashboard_store_path if current_user.owner? 
+  # end
+  # checks current_user login type. If owner, redirect to dashboard paths
+  # why is owner? not recognized as a method if in the User model?
 
 
   def find_store

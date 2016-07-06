@@ -3,6 +3,8 @@ class Product < ActiveRecord::Base
 	extend FriendlyId
 	friendly_id :title, use: :slugged
 
+	mount_uploader :avatar, AvatarUploader
+
 	belongs_to :store
 	has_many :order_lines
 
@@ -11,7 +13,7 @@ class Product < ActiveRecord::Base
 	validates :title, length: { minimum: 5}, presence: true
 	validates :description, length: { minimum: 10}, presence: true
 	validates :sku, presence: true, numericality: { only_integer: true }
-	validates :price, presence: true, numericality: true
+	validates :price, presence: true, numericality: { greater_than: 0 }
 	validates :count, presence: true, numericality: { only_integer: true}
 
 	# Add a boolean :active to indicate if product is live or not?

@@ -40,6 +40,11 @@ gem 'friendly_id', '~> 5.1.0'
 gem 'adminlte-rails'
 gem 'adminlte-generators'
 
+#carrierwave for image storage
+gem 'carrierwave'
+
+#fog for Amazon S3 support
+gem 'fog'
 
 gem 'devise'
 # Use ActiveModel has_secure_password

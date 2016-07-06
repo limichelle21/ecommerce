@@ -1,11 +1,6 @@
 <div class="container">
     <div class="well well-sm">
-        <strong>All Products</strong>
-        <div class="btn-group">
-            <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
-            </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
-                class="glyphicon glyphicon-th"></span>Grid</a>
-        </div>
+        <strong><h3>All Products</h3></strong>
     </div>
     <div id="products" class="row list-group">
     	<% @products.each_slice(3) do |products| %>
@@ -15,14 +10,23 @@
                 <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
                 <div class="caption">
                     <h4 class="group inner list-group-item-heading">
-                        <%= link_to product.title %></h4>
+                        <%= link_to product.title, store_product_path(id: product) %></h4>
                     <div class="row">
                         <div class="col-xs-12 col-md-6">
                             <p class="lead">
-                                Price: <strong>$<%= product.price %></strong></p>
+                                Price: $<%= product.price %></p>
                         </div>
                         <div class="col-xs-12 col-md-6">
-                            <%= button_to 'Add to Cart', new_store_customer_order_line_path(product_id: product), class: 'btn btn-info btn-md', remote: true %>
+
+                            <%= form_tag store_order_lines_path do %>
+                                <%= hidden_field_tag ":product_id", :value => product.id %>
+                                <%= hidden_field_tag ":order_id", :value => session[:current_order_id] %>
+                                <%= hidden_field_tag ":quantity", :value => 1 %>
+                                <%= hidden_field_tag ":price", :value => product.price %>
+                                
+                                <%= submit_tag "Add to Cart" %>
+                            <% end %> 
+
                         </div>
                     </div>
                 </div>

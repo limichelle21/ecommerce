@@ -6,28 +6,24 @@ class OrderLine < ActiveRecord::Base
 	validates :product, presence: true
 	validates :order, presence: true
 	validates :quantity, presence: true, numericality: { only_integer: true, greater_than: 0 }
-	validates :price, presence: true, numericality: true
+	validates :price_in_cents, presence: true, numericality: true
 
-	before_save :finalize
+	# before_save :finalize
 
-	def unit_price
-		if persisted?
-			self.[:unit_price]
-		else
-			product.price
-		end
-	end
+	# def unit_price
+	# 	product.price
+	# end
 
-	def total_price
-		unit_price * quantity
-	end
+	# def total_price
+	# 	unit_price * quantity
+	# end
 
-	private
+	# private
 
-	def finalize
-		self[:unit_price] = unit_price
-		self[:total_price] = quantity * self[:unit_price]
-	end
+	# def finalize
+	# 	self[:unit_price] = unit_price
+	# 	self[:total_price] = quantity * self[:unit_price]
+	# end
 
 
 

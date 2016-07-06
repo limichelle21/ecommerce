@@ -15,7 +15,23 @@ include Faker
 		)
 	end
 
+	owner = Owner.create!(
+	   name:     'Admin User',
+	   email:    'limichelle21@gmail.com',
+	   password: 'helloworld',
+	 )
+
 owners = Owner.all
+
+10.times do 
+	customer = Customer.create!(
+		email: Faker::Internet.email,
+		password: Faker::Internet.password
+		)
+end
+
+customers = Customer.all
+
 
 20.times do
 	store = Store.create!(
@@ -40,10 +56,38 @@ end
 products = Product.all
 
 
+10.times do
+	order = Order.create!(
+		store: stores.sample,
+		customer: customers.sample,
+		price_in_cents: Faker::Commerce.price,
+		completed: [true, false].sample,
+		date_paid: Faker::Date.backward(365)
+		)
+end
+
+orders = Order.all
+
+20.times do
+	order_line = OrderLine.create!(
+		product: products.sample, 
+		order: orders.sample,
+		quantity: Faker::Number.number(2),
+		price_in_cents: Faker::Commerce.price
+		)
+end
+
+order_lines = OrderLine.all
+
+
+
 puts "Seeds finished."
 puts "#{Owner.count} owners created."
+puts "#{Customer.count} customers created"
 puts "#{Store.count} stores created."
 puts "#{Product.count} products created."
+puts "#{Order.count} orders created."
+puts "#{OrderLine.count} order lines created."
 
 
 

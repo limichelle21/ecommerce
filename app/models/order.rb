@@ -7,7 +7,7 @@ class Order < ActiveRecord::Base
 
 	validates :customer, presence: true
 	validates :store, presence: true
-	validates :total, presence: true, numericality: true 
+	validates :price_in_cents, presence: true, numericality: true 
 	validates :completed, :inclusion => {:in => [true, false]} 
 	validates :date_paid, presence: true
 

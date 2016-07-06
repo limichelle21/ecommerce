@@ -64,10 +64,13 @@ class Dashboard::ProductsController < DashboardController
 
     if @product.destroy
       flash[:notice] = "\"#{product.title}\" was deleted successfully."
-      redirect_to :index
     else
       flash[:error] = "There was an error deleting the product."
-      render :show
+    end
+
+    respond_to do |format|
+      format.html
+      format.js
     end
   end
 

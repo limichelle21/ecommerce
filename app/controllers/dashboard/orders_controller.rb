@@ -9,7 +9,6 @@ class Dashboard::OrdersController < DashboardController
 
 	def show
 		@order = Order.find(params[:id])
-		@order_lines = current_order.order_lines #does this belong here?
 	end
 
 	def edit

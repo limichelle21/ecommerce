@@ -1,5 +1,16 @@
 class StoresController < ApplicationController
 
-	def show
+	def new
+		@store = Store.new
 	end
+
+
+	def show
+		@store = Store.find(params[:id])
+	end
+
+
+
 end
+
+
