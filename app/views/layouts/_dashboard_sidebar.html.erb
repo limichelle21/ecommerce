@@ -23,23 +23,6 @@
   <!-- /.search form -->
   <!-- sidebar menu: : style can be found in sidebar.less -->
   <ul class="sidebar-menu">
-    <%= nav_link root_path do %>
-      <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-    <% end %>
-    
-      <%= treeview_link 'Links' do %>
-        <%= nav_link dashboard_store_products_path(@store_id) do %>
-          <i class="fa fa-angle-double-right"></i>
-          All Products
-        <% end %>
-        <%= nav_link store_path(@store_id) do %>
-          <i class="fa fa-angle-double-right"></i>
-          Store
-        <% end %>
-        <%= nav_link  dashboard_store_orders_path(@store_id) do %>
-          <i class="fa fa-angle-double-right"></i>
-          Orders
-        <% end %>
-      <% end %>
+   
   </ul>
 </section>

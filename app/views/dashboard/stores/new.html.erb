@@ -1,26 +1,31 @@
 <div class="container">
 	<h1>Create Your Store</h1>
 	<div class="row">
-		<div class="col-md-3">
-			<h4>Store Name</h4>
-		</div>
-		<div class="col-md-9">
+		
+		<div class="container">
 			<%= form_for [:dashboard, @store] do |f| %>
-				<% if store.errors.any? %>
+
+				<% if @store.errors.any? %>
 					<div class="alert alert-danger">
-						<h4><%= pluralize(store.errors.count, "error") %>.</h4>
+						<h4><%= pluralize(@store.errors.count, "error") %>.</h4>
 						<ul>
-							<% store.errors.full_messages.each do |msg| %>
+							<% @store.errors.full_messages.each do |msg| %>
 							<li><%= msg %></li>
 							<% end %>
 						</ul>
 					</div>
 				<% end %>	
 
-				<%= form_group_tag(store.errors[:name]) do %>
-					<%= f.label :name %>
+				<%= form_group_tag(@store.errors[:name]) do %>
+					<%= f.label :store_name %>
 					<%= f.text_field :name, class: 'form-control', placeholder: "Store Name" %>
 				<% end %>
+
+				<%= form_group_tag(@store.errors[:owner_id]) do %>
+					<%= f.label :owner %>
+					<%= f.hidden_field :owner_id %>
+				<% end %>	
+
 
 				<div class="form-group">
 					<%= f.submit "Save", class: 'btn btn-success' %>

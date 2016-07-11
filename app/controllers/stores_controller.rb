@@ -4,9 +4,8 @@ class StoresController < ApplicationController
 		@store = Store.new
 	end
 
-
 	def show
-		@store = Store.find(params[:id])
+		@store = Store.friendly.find(params[:id])
 	end
 
 

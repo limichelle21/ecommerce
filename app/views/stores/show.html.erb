@@ -51,7 +51,7 @@
 </div>
 
 <div class="container">
-	<h2>Products</h2>
+	<h2><%= link_to "Products", store_products_path(@store.id) %></h2>
 	<div class="row">
 		<% @store.products.each do |product| %>
 		<div class="col-sm-6 col-md-4">

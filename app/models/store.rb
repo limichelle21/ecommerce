@@ -4,6 +4,7 @@ class Store < ActiveRecord::Base
 	friendly_id :name, use: :slugged
 
 	belongs_to :owner
+	# class_name: 'User', foreign_key: 'user_id'
 	has_many :products
 	has_many :orders
 

@@ -13,24 +13,27 @@ class OrderLinesController < ApplicationController
 
 	def new
 		@order = Order.find(params[:order_id]) || Order.new
-	    @order_line = OrderLine.new
+	    @order_line = @order.order_lines.new
 	    authorize @order_line
 	end
 
 	def create
+		@store = Store.friendly.find(params[:store_id])
+
 		if session[:current_order_id].present?
 			@order = Order.find_by(id: session[:current_order_id])
 		else
-			# also need a check if current_user.customer? 
-			@order = current_user.present? ? current_user.orders.create : Order.new
+			# need to associate a store with an order with an order line
+			@order = current_user.present? ? current_user.orders.create : @store.orders.create
 			session[:current_order_id] = @order.id
 		end
+		
 	    @order_line = @order.order_lines.build(order_line_params)
 	    authorize @order_line
 
 	    if @order_line.save
 	      flash[:notice] = "Product was added to Cart"
-	      redirect_to @order
+	      redirect_to :back
 	    else
 	      flash[:error] = "There was an error adding product to Cart."
 	      render :new
@@ -72,7 +75,7 @@ class OrderLinesController < ApplicationController
 	private
   
 	  def order_line_params
-	    params.require(:order_line).permit(:product, :order, :quantity, :price)
+	    params.require(:order_line).permit(:product_id, :order_id, :quantity, :price, :price_in_cents)
 	  end
 
 

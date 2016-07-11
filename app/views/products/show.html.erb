@@ -13,7 +13,17 @@
 			<div id="product-description">
 				<h4 class="lead"><%= @product.description %></h4>
 			</div>		
-			<h4><%= button_to "Add to Cart", store_order_lines_path() %></h4>
+
+
+			 <%= form_tag  do %>
+                <%= hidden_field_tag "order_line[product_id]", @product.id %>
+                <%= hidden_field_tag "order_line[order_id]", current_order ? current_order.id : nil %>
+                <%= number_field_tag "order_line[quantity]", value: order_line.quantity, class: "form-control", min: 1, maxlength: 2 %>
+                <%= hidden_field_tag "order_line[price_in_cents]", @product.price_in_cents %>
+                <%= submit_tag "Add to Cart" %>
+            
+
+            <% end %> 
 		</div>
 	</div>
 </div>

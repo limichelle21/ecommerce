@@ -40,13 +40,14 @@ customers = Customer.all
 		)
 end
 
+
 stores = Store.all
 
 40.times do 
 	product = Product.create!(
 		store: stores.sample,
 		title: Faker::Commerce.product_name,
-		price: Faker::Commerce.price,
+		price_in_cents: Faker::Commerce.price,
 		description: Faker::Lorem.sentence,
 		sku: Faker::Number.number(4),
 		count: Faker::Number.digit
@@ -56,7 +57,7 @@ end
 products = Product.all
 
 
-10.times do
+20.times do
 	order = Order.create!(
 		store: stores.sample,
 		customer: customers.sample,
@@ -68,12 +69,12 @@ end
 
 orders = Order.all
 
-20.times do
+60.times do
 	order_line = OrderLine.create!(
 		product: products.sample, 
 		order: orders.sample,
 		quantity: Faker::Number.number(2),
-		price_in_cents: Faker::Commerce.price
+		price_in_cents: products.sample.price_in_cents
 		)
 end
 

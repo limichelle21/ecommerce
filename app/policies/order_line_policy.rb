@@ -24,8 +24,9 @@ class OrderLinePolicy < ApplicationPolicy
 	end
 
 	def create?
-		is_customer? 
+		true
 	end
+	# everyone allowed access to create action
 
 	def edit?
 		update?

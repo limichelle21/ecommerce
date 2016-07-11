@@ -1,3 +1,5 @@
+
+
 <div class="container">
     <div class="well well-sm">
         <strong><h3>All Products</h3></strong>
@@ -18,12 +20,17 @@
                         </div>
                         <div class="col-xs-12 col-md-6">
 
-                            <%= form_tag store_order_lines_path do %>
-                                <%= hidden_field_tag ":product_id", :value => product.id %>
-                                <%= hidden_field_tag ":order_id", :value => session[:current_order_id] %>
-                                <%= hidden_field_tag ":quantity", :value => 1 %>
-                                <%= hidden_field_tag ":price", :value => product.price %>
+                            <!-- need a button for the CREATE order_line action-->
+
+
+                            <%= form_tag store_orders_path do %>
+                            
+                                <%= hidden_field_tag "order_line[product_id]", product.id %>
                                 
+                                <%= hidden_field_tag "order_line[order_id]", current_order ? current_order.id : Order.new.id %>
+
+                                <%= hidden_field_tag "order_line[quantity]", 1 %>
+                                <%= hidden_field_tag "order_line[price_in_cents]", product.price_in_cents %>
                                 <%= submit_tag "Add to Cart" %>
                             <% end %> 
 

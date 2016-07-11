@@ -32,11 +32,11 @@ class ProductPolicy < ApplicationPolicy
 	end
 
 	def update?
-		is_owner? && product.owner == user
+		is_owner? && product.store.owner == user
 	end
 
 	def destroy?
-		is_owner? && product.owner == user
+		is_owner? && product.store.owner == user
 	end
 
 

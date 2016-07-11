@@ -7,7 +7,6 @@ class OrdersController < ApplicationController
 
 	def show
 		@order = Order.find(params[:id])
-		@order_lines = current_order.order_lines #does this belong here?
 	end
 
 	def new
@@ -15,8 +14,9 @@ class OrdersController < ApplicationController
 	end
 	
 	def create
+		@store = Store.friendly.find(params[:store_id])
+		@order = Order.create
 	end
-
 
 	def edit
 		@order = Order.find(params[:id])

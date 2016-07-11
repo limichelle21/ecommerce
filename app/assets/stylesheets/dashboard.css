@@ -1,3 +1,5 @@
+
+
 /*
  * This is a manifest file that'll be compiled into dashboard.css, which will include all the files
  * listed below.
@@ -28,3 +30,18 @@
  	text-align: center;
  	padding-top: 10px 20px;
  }
+
+.container h2 {
+	text-align: left;
+}
+
+.container {
+	margin-top: 2em;
+}
+
+
+
+
+
+
+

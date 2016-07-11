@@ -18,10 +18,21 @@
  *= require admin-lte
  */
 
- .user-info {
- 	margin-top: 9px;
- }
 
-.nav {
-	margin-top: 5px;
+
+.navbar-brand
+{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin:0 auto;
+
 }
+
+.pull-left {
+	margin: 15px 20px;
+
+}
+
+

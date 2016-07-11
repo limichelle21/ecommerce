@@ -6,8 +6,7 @@ class ApplicationController < ActionController::Base
 
   # before_action :authenticate_user!
 
-  # before_action :redirect_dashboard
-
+ 
   before_filter :find_store
 
   def current_order
@@ -15,13 +14,6 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :current_order
-
-
-  # def redirect_dashboard
-  #   redirect_to dashboard_store_path if current_user.owner? 
-  # end
-  # checks current_user login type. If owner, redirect to dashboard paths
-  # why is owner? not recognized as a method if in the User model?
 
 
   def find_store
@@ -36,6 +28,19 @@ class ApplicationController < ActionController::Base
 
   	# redirect to root unless a matching store is found
   	redirect_to dashboard_root_path if @store
+  end
+
+  private
+
+  def after_sign_out_path_for(user)
+    root_path
+  end
+
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:email, :password, :type) }
   end
 
 

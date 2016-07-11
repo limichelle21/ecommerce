@@ -8,15 +8,32 @@ class OrderLine < ActiveRecord::Base
 	validates :quantity, presence: true, numericality: { only_integer: true, greater_than: 0 }
 	validates :price_in_cents, presence: true, numericality: true
 
+
+
+	def price # getter for price in cents
+		read_attribute(:price_in_cents) / 100.0
+	end
+
+	def price=(v) # setter for price in cents
+		# v = v.to_s
+		# v = v.gsub(',','')
+		# v = v.gsub('$','')
+
+		v.to_i if v.is_a?(String)
+
+		write_attribute(:price_in_cents, v * 100)
+	end
+
+	
 	# before_save :finalize
 
-	# def unit_price
-	# 	product.price
-	# end
+	def unit_price
+		product.price_in_cents
+	end
 
-	# def total_price
-	# 	unit_price * quantity
-	# end
+	def total_price
+		unit_price * quantity
+	end
 
 	# private
 

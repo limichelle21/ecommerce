@@ -1,0 +1,6 @@
+<% if @product.destroyed? %>
+	$('#product-' +<%= @product.id %>).hide();
+	$('.js-products-count').html("<%= pluralize(@product.count, 'product') %>");
+<% else %>
+	$('#product-' +<%= @product.id %>).prepend("div class='alert alert-danger'><%= flash.now[:alert] %></div>");
+<% end %>
