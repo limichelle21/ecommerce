@@ -1,5 +1,5 @@
 class Owner < User
 
-	belongs_to :store
+	has_many :stores
 	
 end

@@ -15,10 +15,12 @@
 			</div>		
 
 
-			 <%= form_tag  do %>
+			 <%= form_tag store_order_lines_path do %>
                 <%= hidden_field_tag "order_line[product_id]", @product.id %>
-                <%= hidden_field_tag "order_line[order_id]", current_order ? current_order.id : nil %>
-                <%= number_field_tag "order_line[quantity]", value: order_line.quantity, class: "form-control", min: 1, maxlength: 2 %>
+                <%= hidden_field_tag "order_line[order_id]", current_order ? current_order.id : Order.new.id %>
+                
+                <%= select_tag "order_line[quantity]", options_for_select([["1","1"], ["2","2"], ["3","3"], ["4","4"]]) %>
+               
                 <%= hidden_field_tag "order_line[price_in_cents]", @product.price_in_cents %>
                 <%= submit_tag "Add to Cart" %>
             

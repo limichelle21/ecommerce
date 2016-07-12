@@ -1,5 +1,9 @@
 class Dashboard::StoresController < DashboardController
 
+	def index
+		@stores = Store.all
+	end
+
 	def show
 		@store = Store.friendly.find(params[:id])
 	end
@@ -12,7 +16,13 @@ class Dashboard::StoresController < DashboardController
 	def create
 		@store = Store.new
 		@owner = current_user
-		@store = @owner.stores.build(store_params)
+
+		# need to extend the Devise controller? 
+		
+		raise current_user.inspect #nil 
+		@store = @owner.store.build(store_params)
+
+		# undefined method "stores" for Owner. When User is signed in, why @owner returns nil?
 		
 		if @store.save
 			flash[:notice] = "Store was created."
@@ -46,7 +56,7 @@ class Dashboard::StoresController < DashboardController
   private
 
   def store_params
-    params.require(:store).permit(:name)
+    params.require(:store).permit(:name, :owner_id)
   end
 
 	

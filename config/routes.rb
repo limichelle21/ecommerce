@@ -20,10 +20,11 @@ Rails.application.routes.draw do
 
   resources :stores, only: [:show], path: '/' do 
     resources :products, only: [:index, :show]
-    resources :orders, only: [:index, :show, :create] do
-      resources :order_lines, only: [:new, :show, :create, :update, :destroy]
-    end
+    resources :orders, only: [:index, :show]
+    resources :order_lines, only: [:create, :update, :destroy]
   end   
+
+
     # ecommerce.com/matts-store/products
     # ecommerce.com/matts-store/cart
     # ecommerce.com/matts-store/checkout

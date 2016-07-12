@@ -19,7 +19,7 @@ class Product < ActiveRecord::Base
 	# Add a boolean :active to indicate if product is live or not?
 
 	def price # getter for rent in cents
-		read_attribute(:price_in_cents) / 100.0
+		read_attribute(:price_in_cents) 
 	end
 
 	def price=(v) # setter for rent in cents

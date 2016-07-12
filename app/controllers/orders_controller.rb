@@ -7,6 +7,7 @@ class OrdersController < ApplicationController
 
 	def show
 		@order = Order.find(params[:id])
+		
 	end
 
 	def new
@@ -15,7 +16,7 @@ class OrdersController < ApplicationController
 	
 	def create
 		@store = Store.friendly.find(params[:store_id])
-		@order = Order.create
+		@order = Order.new
 	end
 
 	def edit

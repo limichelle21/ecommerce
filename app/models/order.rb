@@ -11,9 +11,12 @@ class Order < ActiveRecord::Base
 	# validates :completed, :inclusion => {:in => [true, false]} 
 	# validates :date_paid, presence: true
 
-	def order_price
+	def subtotal
+		order_lines.collect { |ol| ol.present? ? ol.total_price : 0 }.sum
 	end
 
 	# need a sum of order_line.total_price
+
+
 
 end

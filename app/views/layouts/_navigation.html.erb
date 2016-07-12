@@ -18,11 +18,11 @@
 				 	<% end %>
 					 	
 					 <div class="pull-left">
-						<button type="button"><span class="glyphicon glyphicon-shopping-cart"> </span>
+						<a class="btn btn-default" href=""><span class="glyphicon glyphicon-shopping-cart"></span>
 				 		<% if current_order.present? %>
-				 			<%= current_order.order_lines.count %>
+				 			<%= current_order.order_lines.count %> Items
 				 		<% end %> 
-					 </button>
+					 	</a>
 				</div>	
 			 
 			</ul>

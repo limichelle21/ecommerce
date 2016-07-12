@@ -27,10 +27,8 @@
 
         <div class="field">
           <br />
-          <%= f.radio_button :type, 'owner' %>
+          <%= f.hidden_field :type, value: 'Owner' %>
           <%= f.label :type, 'Owner' %>
-          <%= f.radio_button :type, 'customer' %>
-          <%= f.label :type, 'Customer' %>
         </div>
 
         <div class="actions">

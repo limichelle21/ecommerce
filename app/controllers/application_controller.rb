@@ -5,15 +5,25 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   # before_action :authenticate_user!
-
- 
   before_filter :find_store
+  helper_method :current_order
+
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
 
   def current_order
     @current_order ||= session[:current_order_id] && Order.find_by(id: session[:current_order_id])
   end
+  
 
-  helper_method :current_order
+  def current_order_2
+    if !session[:order_id].nil?
+      Order.find_by(id: session[:order_id])
+    else
+      Order.new
+    end
+  end
+
 
 
   def find_store
@@ -40,7 +50,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:email, :password, :type) }
+    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:email, :password, :password_confirmation, :type) }
   end
 
 

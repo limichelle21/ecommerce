@@ -3,7 +3,7 @@ class DashboardController < ApplicationController
 	layout 'dashboard'
 	# to correspond with the dashboard layouts for view 
 
-	before_action :check_if_owner
+	# before_action :check_if_owner
 
 	# check if the current user is the Store's owner. If not, redirect to root path
 
