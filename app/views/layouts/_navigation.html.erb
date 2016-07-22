@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default" role="navigation">
-		<a class="navbar-brand" href="#"></a>
+		
 
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-left">
@@ -18,22 +18,21 @@
 				 	<% end %>
 					 	
 					 <div class="pull-left">
-						<a class="btn btn-default" href=""><span class="glyphicon glyphicon-shopping-cart"></span>
-				 		<% if current_order.present? %>
-				 			<%= current_order.order_lines.count %> Items
+					 	<% if current_order.present? %>
+					 		
+
+
+					 		<%= link_to store_order_path(@store.id, current_order.id), class: "btn btn-default" do  %>
+								<span class="glyphicon glyphicon-shopping-cart"></span>
+				 		 		<%= current_order.total_items %> Items
+			 		 		<% end %>
+		 		 		
 				 		<% end %> 
-					 	</a>
+					 
 				</div>	
 			 
 			</ul>
 		</div>
-
-
-	
-	
-
-
-
 
 </nav>
 

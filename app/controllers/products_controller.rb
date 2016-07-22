@@ -2,16 +2,22 @@ class ProductsController < ApplicationController
 
   # before_action :authorize_user, except: [:show]
 
+  before_action :get_store
+
   def index
-    @store = Store.friendly.find(params[:store_id])
     @products = @store.products.all
   end
 
   def show
     @product = Product.friendly.find(params[:id])
-
   end
 
+
+private
+
+  def get_store
+    @store = Store.friendly.find(params[:store_id])
+  end
 
 
   # def authorize_user

@@ -31,8 +31,18 @@ class OrderLinesController < ApplicationController
 			session[:current_order_id] = @order.id
 		end
 
-	    @order_line = @order.order_lines.build(order_line_params)
-	    
+		# @order is not being created
+
+		#check if product.id already exists in an order_line
+
+		@order_line = @order.order_lines.where(product_id: params[:order_line][:product_id]).first
+
+		if @order_line.present? 
+			@order_line.quantity += params[:order_line][:quantity].to_i
+		else
+			@order_line = @order.order_lines.build(order_line_params)
+		end			
+
 
 	    if @order_line.save
 	      flash[:notice] = "Product was added to Cart"
@@ -49,15 +59,15 @@ class OrderLinesController < ApplicationController
 	end
 
 	def update
-		@order = Order.find_by(id: session[:current_order_id])
+		# @order = Order.find_by(id: session[:current_order_id])
 		@order_line = OrderLine.find(params[:id])
 	    authorize @order_line
 
-	    @order_line.assign_attributes(order_line_params)
+	    @order_line.quantity = params[:order_line][:quantity].to_i
 
 	    if @order_line.save
 	      flash[:notice] = "Item was updated in the cart."
-	      redirect_to [@order, @order_line]
+	      redirect_to [@order, @order.order_line]
 	    else
 	      flash[:error] = "Item was not updated in the cart. Please try again."
 	      render :edit
@@ -70,7 +80,7 @@ class OrderLinesController < ApplicationController
 
 	    if @order_line.destroy
 	      flash[:notice] = "Item was removed from cart successfully."
-	      redirect_to @order
+	      redirect_to [@order]
 	    else
 	      flash[:error] = "There was an error removing item from cart. Please try again."
 	      render :show

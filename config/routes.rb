@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  devise_for :users, controllers: {
+    registrations: 'users/registrations',
+    sessions: 'users/sessions'
+  }
 
   namespace :dashboard do 
     resources :stores, only: [:new, :create, :show, :update] do
@@ -9,7 +13,6 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -20,8 +23,8 @@ Rails.application.routes.draw do
 
   resources :stores, only: [:show], path: '/' do 
     resources :products, only: [:index, :show]
-    resources :orders, only: [:index, :show]
-    resources :order_lines, only: [:create, :update, :destroy]
+    resources :orders, only: [:index, :show] 
+    resources :order_lines, only: [:index, :create, :update, :destroy]
   end   
 
 

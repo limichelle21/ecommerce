@@ -1,7 +1,8 @@
 class OrdersController < ApplicationController
 
+	before_action :get_store, only: [:index, :show, :create]
+
 	def index
-		@store = Store.friendly.find(params[:store_id])
 		@orders = @store.orders.all
 	end
 
@@ -15,7 +16,6 @@ class OrdersController < ApplicationController
 	end
 	
 	def create
-		@store = Store.friendly.find(params[:store_id])
 		@order = Order.new
 	end
 
@@ -56,6 +56,10 @@ class OrdersController < ApplicationController
   
   def order_params
      params.require(:order).permit(:customer, :total, :completed, :date_paid)
+  end
+
+  def get_store
+  	@store = Store.friendly.find(params[:store_id])
   end
 
 end

@@ -15,6 +15,10 @@ class Order < ActiveRecord::Base
 		order_lines.collect { |ol| ol.present? ? ol.total_price : 0 }.sum
 	end
 
+	def total_items
+		order_lines.sum(:quantity)
+	end
+
 	# need a sum of order_line.total_price
 
 
