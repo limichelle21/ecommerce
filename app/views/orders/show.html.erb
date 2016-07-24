@@ -9,7 +9,7 @@
 		</div>
 	<% end %>
 
-	<h2>Your Cart</h2>
+	<h2>Your Order</h2>
 
 		<% if @order.order_lines.size == 0 %>
 			<p class="text-center">
@@ -22,7 +22,5 @@
 
 		
 	<h2 id="total">Total: $<%= @order.subtotal %></h2>
-
-	
 
 </div>

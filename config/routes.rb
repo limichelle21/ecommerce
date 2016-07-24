@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'carts/show'
+
   devise_for :users, controllers: {
     registrations: 'users/registrations',
     sessions: 'users/sessions'
@@ -22,9 +24,10 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   resources :stores, only: [:show], path: '/' do 
+    resource :cart, only: [:show]
     resources :products, only: [:index, :show]
     resources :orders, only: [:index, :show] 
-    resources :order_lines, only: [:index, :create, :update, :destroy]
+    resources :order_lines, only: [:create, :update, :destroy]
   end   
 
 

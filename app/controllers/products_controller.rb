@@ -1,15 +1,18 @@
 class ProductsController < ApplicationController
 
-  # before_action :authorize_user, except: [:show]
-
   before_action :get_store
+
 
   def index
     @products = @store.products.all
+
   end
 
+  # create a new instance of OrderLine model to use in forms
+
   def show
-    @product = Product.friendly.find(params[:id])
+    @product = @store.products.friendly.find(params[:id])
+
   end
 
 
@@ -20,11 +23,4 @@ private
   end
 
 
-  # def authorize_user
-  #   product = Product.find(params[:id])
-
-  #   unless current_user == current_user.owner? || current_user.admin?
-  #     flash[:alert] = "You must be authorized to do that."
-  #     redirect_to product 
-  #   end
 end

@@ -6,21 +6,25 @@ class ApplicationController < ActionController::Base
 
   # before_action :authenticate_user!
   before_filter :find_store
+ 
   helper_method :current_order
+  before_filter :current_order
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
 
-  def current_order
-    @current_order ||= session[:current_order_id] && Order.find_by(id: session[:current_order_id])
-  end
+  # def current_order_2
+  #   @current_order ||= session[:current_order_id] && Order.find_by(id: session[:current_order_id])
+  # end
+
   
 
-  def current_order_2
+  def current_order
+    @store = Store.friendly.find(params[:store_id])
     if !session[:order_id].nil?
-      Order.find_by(id: session[:order_id])
+      @current_order = @store.orders.find_by(id: session[:order_id])
     else
-      Order.new
+      @current_order = @store.orders.new
     end
   end
 

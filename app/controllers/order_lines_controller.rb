@@ -1,38 +1,18 @@
 class OrderLinesController < ApplicationController
 
-	def index
-		@order = Order.find(params[:order_id])
-		@order_lines = @order.order_lines.all
-	end
-
-	def show
-		@order_line = OrderLine.find(params[:id])
-	end
-
-	# find @order by session ID - current_user.order?
-
-	def new
-		@order = Order.find(params[:order_id]) || Order.new
-	    @order_line = @order.order_lines.new
-	    authorize @order_line
-	end
+	before_action :get_store, only: [:create, :update, :destroy]
 
 	def create
-		@store = Store.friendly.find(params[:store_id])
 
-		if session[:current_order_id].present?
-			@order = Order.find_by(id: session[:current_order_id])
-		else
-			# need to associate a store with an order with an order line. Where does store come into play with current_user?
+		# if session[:current_order_id].present?
+		# 	@order = Order.find_by(id: session[:current_order_id])
+		# else
+		# 	@order = current_user.present? ? current_user.orders.create : @store.orders.create
+		# 	session[:current_order_id] = @order.id
+		# end
 
-			# @store.current_user.orders.create? 
-			
-			@order = current_user.present? ? current_user.orders.create : @store.orders.create
-			session[:current_order_id] = @order.id
-		end
-
-		# @order is not being created
-
+		@order = current_order 
+	
 		#check if product.id already exists in an order_line
 
 		@order_line = @order.order_lines.where(product_id: params[:order_line][:product_id]).first
@@ -45,6 +25,7 @@ class OrderLinesController < ApplicationController
 
 
 	    if @order_line.save
+	      session[:order_id] = @order_line.order.id 
 	      flash[:notice] = "Product was added to Cart"
 	      redirect_to :back
 	    else
@@ -53,38 +34,38 @@ class OrderLinesController < ApplicationController
 	    end
 	end
 
-	def edit
-		@order_line = OrderLine.find(params[:id])
-	    authorize @order_line
-	end
 
 	def update
-		# @order = Order.find_by(id: session[:current_order_id])
-		@order_line = OrderLine.find(params[:id])
-	    authorize @order_line
+		@order = current_order
+		@order_line = @order.order_lines.find(params[:id])
 
 	    @order_line.quantity = params[:order_line][:quantity].to_i
 
 	    if @order_line.save
 	      flash[:notice] = "Item was updated in the cart."
-	      redirect_to [@order, @order.order_line]
+	      redirect_to :back
 	    else
 	      flash[:error] = "Item was not updated in the cart. Please try again."
-	      render :edit
+	      redirect_to :back
 	    end
+
+	    @order_lines = @order.order_lines
 	end
 
 	def destroy
-		@order_line = OrderLine.find(params[:id])
-	    authorize @order_line
+		@order = Order.find_by(id: session[:current_order_id])
+		@order_line = @order.order_lines.find(params[:id])
+
 
 	    if @order_line.destroy
 	      flash[:notice] = "Item was removed from cart successfully."
-	      redirect_to [@order]
+	      redirect_to :back
 	    else
 	      flash[:error] = "There was an error removing item from cart. Please try again."
-	      render :show
+	      redirect_to :back
 	    end
+
+	    @order_lines = @order.order_lines
 	end
 
 	private
@@ -92,6 +73,14 @@ class OrderLinesController < ApplicationController
 	  def order_line_params
 	    params.require(:order_line).permit(:product_id, :order_id, :quantity, :price, :price_in_cents)
 	  end
+
+	  def get_store
+	  	@store = Store.friendly.find(params[:store_id])
+	  end
+
+	  # def current_order
+	  # 	Order.find_by(id: session[:current_order_id])
+	  # end
 
 
 end
