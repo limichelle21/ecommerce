@@ -1,4 +1,5 @@
-<% if !@order_line.nil? && @order_line.errors.any? %>
+
+<% if !@order_lines.nil? && @order_lines.errors.any? %>
 	<div class="alert alert-danger">
 		<ul>
 			<% @order_line.errors.full_messages.each do |msg| %>
@@ -8,12 +9,13 @@
 	</div>
 <% end %>
 
-<% if @order_lines.size == 0 %>
+
+<% if @order.order_lines.size == 0 %>
 	<p class="text-center">
 		There are no items in your shopping cart. Please <%= link_to "go back", store_products_path %> and add some items in your cart.
 	</p>
 <% else %>
-	<% @order_lines.each do |order_line| %>
+	<% @order.order_lines.each do |order_line| %>
 		<%= render 'carts/cart_row', product: order_line.product, order_line: order_line, show_total: true %>
 	<% end %>
 <% end %>

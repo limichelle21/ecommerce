@@ -8,6 +8,7 @@
 
 include Faker
 
+
 10.times do 
 	owner = Owner.create!(
 		email: Faker::Internet.email,
@@ -61,7 +62,6 @@ products = Product.all
 	order = Order.create!(
 		store: stores.sample,
 		customer: customers.sample,
-		price_in_cents: Faker::Commerce.price,
 		completed: [true, false].sample,
 		date_paid: Faker::Date.backward(365)
 		)

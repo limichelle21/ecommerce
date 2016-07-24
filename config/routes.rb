@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'carts/show'
 
   devise_for :users, controllers: {
     registrations: 'users/registrations',
@@ -19,7 +18,8 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  get ':id', to: 'stores#show' # ecommerce.com/matts-store
+  get ':id', to: 'stores#show' 
+  # ecommerce.com/matts-store
 
   root 'welcome#index'
 
@@ -30,6 +30,8 @@ Rails.application.routes.draw do
     resources :order_lines, only: [:create, :update, :destroy]
   end   
 
+
+# path: '/'
 
     # ecommerce.com/matts-store/products
     # ecommerce.com/matts-store/cart

@@ -28,6 +28,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  
+
+  # for @store - if [:store_id], method breaks when navigating within a store. 
+
 
 
   def find_store

@@ -27,7 +27,7 @@ class OrderLinesController < ApplicationController
 	    if @order_line.save
 	      session[:order_id] = @order_line.order.id 
 	      flash[:notice] = "Product was added to Cart"
-	      redirect_to :back
+	      redirect_to store_cart_path
 	    else
 	      flash[:error] = "There was an error adding product to Cart."
 	      redirect_to :back
@@ -43,10 +43,15 @@ class OrderLinesController < ApplicationController
 
 	    if @order_line.save
 	      flash[:notice] = "Item was updated in the cart."
-	      redirect_to :back
+	    
 	    else
 	      flash[:error] = "Item was not updated in the cart. Please try again."
-	      redirect_to :back
+	     
+	    end
+
+	    respond_to do |format|
+	      format.html
+	      format.js
 	    end
 
 	    @order_lines = @order.order_lines
@@ -59,10 +64,15 @@ class OrderLinesController < ApplicationController
 
 	    if @order_line.destroy
 	      flash[:notice] = "Item was removed from cart successfully."
-	      redirect_to :back
+	    
 	    else
 	      flash[:error] = "There was an error removing item from cart. Please try again."
-	      redirect_to :back
+	    
+	    end
+
+	    respond_to do |format|
+	      format.html
+	      format.js
 	    end
 
 	    @order_lines = @order.order_lines
@@ -78,9 +88,6 @@ class OrderLinesController < ApplicationController
 	  	@store = Store.friendly.find(params[:store_id])
 	  end
 
-	  # def current_order
-	  # 	Order.find_by(id: session[:current_order_id])
-	  # end
 
 
 end

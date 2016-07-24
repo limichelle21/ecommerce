@@ -2,7 +2,7 @@
 	<% if @order.order_lines.nil? && @order.order_lines.errors.any? %>
 		<div class="alert alert-danger">
 			<ul>
-				<% @order.order_line.errors.full_messages.each do |msg| %>
+				<% @order_lines.errors.full_messages.each do |msg| %>
 				<li><%= msg %></li>
 				<% end %>
 			</ul>
@@ -11,14 +11,12 @@
 
 	<h2>Your Order</h2>
 
-		<% if @order.order_lines.size == 0 %>
-			<p class="text-center">
-				There are no items in your cart. Please <%= link_to "go back", store_products_path %>
-			 and add some items to your cart.
-			</p>
-		<% else %>		
-			<%= render 'order_lines/order_line_row' %>
-		<% end %> 
+	<% if @order.customer == current_user %>
+		<%= render 'order_lines/order_line_row' %>
+	<% end %>
+
+	<h2>Your Information</h2>
+
 
 		
 	<h2 id="total">Total: $<%= @order.subtotal %></h2>
