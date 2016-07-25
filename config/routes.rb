@@ -18,12 +18,12 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  get ':id', to: 'stores#show' 
+   
   # ecommerce.com/matts-store
 
   root 'welcome#index'
-
-  resources :stores, only: [:show], path: '/' do 
+  get ':store_id', to: 'stores#show', as: 'store'
+  resources :store, only: [:show], path: '/' do 
     resource :cart, only: [:show]
     resources :products, only: [:index, :show]
     resources :orders, only: [:index, :show] 

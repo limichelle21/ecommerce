@@ -19,9 +19,9 @@
 
 		 	
 
-		 	<% if @current_order.present? %>
+		 	<% if current_order.present? %>
 
-			 	<li class="cart-text"><%= link_to "#{@current_order.total_items} Items in Cart ( $ #{@current_order.subtotal} )", store_cart_path(@store.id), class: "btn btn-link" %></li>	 
+			 	<li class="cart-text"><%= link_to "#{current_order.total_items} Items in Cart ( $ #{current_order.subtotal} )", store_cart_path(@store.id), class: "btn btn-link" %></li>	 
 			<% end %>
 		</ul>
 	</div>

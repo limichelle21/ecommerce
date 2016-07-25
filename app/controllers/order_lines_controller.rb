@@ -23,7 +23,6 @@ class OrderLinesController < ApplicationController
 			@order_line = @order.order_lines.build(order_line_params)
 		end			
 
-
 	    if @order_line.save
 	      session[:order_id] = @order_line.order.id 
 	      flash[:notice] = "Product was added to Cart"
@@ -32,6 +31,7 @@ class OrderLinesController < ApplicationController
 	      flash[:error] = "There was an error adding product to Cart."
 	      redirect_to :back
 	    end
+
 	end
 
 

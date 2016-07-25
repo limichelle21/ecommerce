@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
 
   def index
     @products = @store.products.all
-
+    @order_line = current_order.order_lines.new
   end
 
   # create a new instance of OrderLine model to use in forms

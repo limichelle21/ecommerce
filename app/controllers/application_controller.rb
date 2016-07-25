@@ -14,23 +14,54 @@ class ApplicationController < ActionController::Base
 
 
   # def current_order_2
-  #   @current_order ||= session[:current_order_id] && Order.find_by(id: session[:current_order_id])
+  #   @store = Store.friendly.find(params[:store_id])
+  #   @current_order ||= session[:current_order_id] && @store.orders.find_by(id: session[:current_order_id])
   # end
 
-  
 
-  def current_order
+  def current_order #this works
     @store = Store.friendly.find(params[:store_id])
-    if !session[:order_id].nil?
-      @current_order = @store.orders.find_by(id: session[:order_id])
+    if !session[:current_order_id].nil?
+      @store.orders.find_by(id: session[:current_order_id])
     else
-      @current_order = @store.orders.new
+      @store.orders.create
     end
   end
 
-  
 
-  # for @store - if [:store_id], method breaks when navigating within a store. 
+
+  # def current_order
+  #   @store = Store.friendly.find(params[:store_id])
+  #   if session[:order_id].nil?  
+
+  #    @current_order = @store.orders.find_by(id: session[:order_id])
+    
+  #   else
+      
+    
+  #     @current_order = @store.orders.create
+  #   end
+   
+    
+    
+
+
+
+      
+      
+      # a session[:order_id] does not equate order_id as saved in DB. 
+      # need to save a session[:order_id] as a @current_order.id, which would not be found in DB
+
+  # end
+
+
+
+
+  
+ 
+
+
+
 
 
 
