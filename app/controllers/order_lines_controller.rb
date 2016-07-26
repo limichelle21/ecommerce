@@ -1,6 +1,7 @@
 class OrderLinesController < ApplicationController
 
 	before_action :get_store, only: [:create, :update, :destroy]
+	before_action :set_order, only: [:create, :update, :destroy]
 
 	def create
 
@@ -11,7 +12,7 @@ class OrderLinesController < ApplicationController
 		# 	session[:current_order_id] = @order.id
 		# end
 
-		@order = current_order 
+	
 	
 		#check if product.id already exists in an order_line
 
@@ -26,7 +27,7 @@ class OrderLinesController < ApplicationController
 	    if @order_line.save
 	      session[:order_id] = @order_line.order.id 
 	      flash[:notice] = "Product was added to Cart"
-	      redirect_to store_cart_path
+	      redirect_to store_products_path
 	    else
 	      flash[:error] = "There was an error adding product to Cart."
 	      redirect_to :back
@@ -36,17 +37,13 @@ class OrderLinesController < ApplicationController
 
 
 	def update
-		@order = current_order
 		@order_line = @order.order_lines.find(params[:id])
-
 	    @order_line.quantity = params[:order_line][:quantity].to_i
-
+	 
 	    if @order_line.save
 	      flash[:notice] = "Item was updated in the cart."
-	    
 	    else
 	      flash[:error] = "Item was not updated in the cart. Please try again."
-	     
 	    end
 
 	    respond_to do |format|
@@ -58,16 +55,13 @@ class OrderLinesController < ApplicationController
 	end
 
 	def destroy
-		@order = Order.find_by(id: session[:current_order_id])
 		@order_line = @order.order_lines.find(params[:id])
-
 
 	    if @order_line.destroy
 	      flash[:notice] = "Item was removed from cart successfully."
 	    
 	    else
 	      flash[:error] = "There was an error removing item from cart. Please try again."
-	    
 	    end
 
 	    respond_to do |format|
@@ -86,6 +80,10 @@ class OrderLinesController < ApplicationController
 
 	  def get_store
 	  	@store = Store.friendly.find(params[:store_id])
+	  end
+
+	  def set_order
+	  	@order = current_order
 	  end
 
 

@@ -30,39 +30,6 @@ class ApplicationController < ActionController::Base
 
 
 
-  # def current_order
-  #   @store = Store.friendly.find(params[:store_id])
-  #   if session[:order_id].nil?  
-
-  #    @current_order = @store.orders.find_by(id: session[:order_id])
-    
-  #   else
-      
-    
-  #     @current_order = @store.orders.create
-  #   end
-   
-    
-    
-
-
-
-      
-      
-      # a session[:order_id] does not equate order_id as saved in DB. 
-      # need to save a session[:order_id] as a @current_order.id, which would not be found in DB
-
-  # end
-
-
-
-
-  
- 
-
-
-
-
 
 
   def find_store
