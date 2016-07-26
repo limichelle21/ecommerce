@@ -1,8 +1,5 @@
 class Dashboard::StoresController < DashboardController
 
-	def index
-		@stores = Store.all
-	end
 
 	def show
 		@store = Store.friendly.find(params[:id])
@@ -11,7 +8,6 @@ class Dashboard::StoresController < DashboardController
 	def new
 		@store = Store.new
 	end
-
 
 	def create
 		@store = Store.new

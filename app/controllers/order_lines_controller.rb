@@ -11,9 +11,7 @@ class OrderLinesController < ApplicationController
 		# 	@order = current_user.present? ? current_user.orders.create : @store.orders.create
 		# 	session[:current_order_id] = @order.id
 		# end
-
-	
-	
+		
 		#check if product.id already exists in an order_line
 
 		@order_line = @order.order_lines.where(product_id: params[:order_line][:product_id]).first

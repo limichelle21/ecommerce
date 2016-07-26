@@ -1,38 +1,19 @@
 class Dashboard::OrdersController < DashboardController
 
 #order belongs to a store
+	before_action :get_store, only: [:index, :show]
 
 	def index
-		@store = Store.friendly.find(params[:store_id])
 		@orders = @store.orders.all
 	end
 
 	def show
-		@order = Order.find(params[:id])
+		@order = @store.orders.find(params[:id])
 	end
 
-	def edit
-		@order = Order.find(params[:id])
-		authorize @order
-	end
-
-	def update
-		@order = Order.find(params[:id])
-	    authorize @order
-
-	    @order.assign_attributes(order_params)
-
-	    if @order.save
-	      flash[:notice] = "Order was saved successfully."
-	      redirect to @order
-	    else
-	      flash[:error] = "The order was not updated. Please try again."
-	      render :edit
-	    end
-	end
 
 	def destroy
-		@order = Order.find(params[:id])
+		@order = @store.orders.find(params[:id])
 	    authorize @order 
 	    
 	    if @order.destroy
@@ -50,5 +31,8 @@ class Dashboard::OrdersController < DashboardController
      params.require(:order).permit(:customer, :total, :completed, :date_paid)
   end
 
+  def get_store
+	 @store = Store.friendly.find(params[:store_id])
+  end
 
 end

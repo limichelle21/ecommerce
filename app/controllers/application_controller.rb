@@ -7,10 +7,11 @@ class ApplicationController < ActionController::Base
   # before_action :authenticate_user!
   before_filter :find_store
  
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
   helper_method :current_order
   before_filter :current_order
 
-  before_action :configure_permitted_parameters, if: :devise_controller?
 
 
   # def current_order_2
@@ -19,7 +20,7 @@ class ApplicationController < ActionController::Base
   # end
 
 
-  def current_order #this works
+  def current_order 
     @store = Store.friendly.find(params[:store_id])
     if !session[:current_order_id].nil?
       @store.orders.find_by(id: session[:current_order_id])
@@ -28,7 +29,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
+ # def current_order works for store 2, but not for store 3, etc
 
 
 

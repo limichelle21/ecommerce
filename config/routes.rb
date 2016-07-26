@@ -7,10 +7,10 @@ Rails.application.routes.draw do
   }
 
   namespace :dashboard do 
-    resources :stores, only: [:new, :create, :show, :update] do
+    resources :stores, only: [:new, :create, :update] do
       resources :products
-      resources :orders, only: [:index, :show, :update, :destroy]
-      resources :order_lines, only: [:index, :show, :update, :destroy]
+      resources :orders, only: [:index, :show, :destroy]
+      resources :order_lines, only: [:index, :show]
     end
   end
 
@@ -22,8 +22,9 @@ Rails.application.routes.draw do
   # ecommerce.com/matts-store
 
   root 'welcome#index'
+
   get ':store_id', to: 'stores#show', as: 'store'
-  resources :store, only: [:show], path: '/' do 
+  resources :stores, only: [:show], path: '/' do 
     resource :cart, only: [:show]
     resources :products, only: [:index, :show]
     resources :orders, only: [:index, :show] 
