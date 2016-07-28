@@ -23,9 +23,9 @@ class ApplicationController < ActionController::Base
   def current_order 
     @store = Store.friendly.find(params[:store_id])
     if !session[:current_order_id].nil?
-      @store.orders.find_by(id: session[:current_order_id])
+      @current_order = @store.orders.find_by(id: session[:current_order_id])
     else
-      @store.orders.create
+      @current_order = @store.orders.create
     end
   end
 

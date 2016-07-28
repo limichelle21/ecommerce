@@ -6,4 +6,10 @@ class CartsController < ApplicationController
   	@order_lines = current_order.order_lines
   end
 
+  def clear_cart
+  	session[:current_order_id] = nil
+  	redirect_to store_path
+  end
+
+
 end

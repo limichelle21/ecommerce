@@ -19,5 +19,11 @@
 	<% end %>
 <% end %>
 
-
-<h1>Total: $<%= current_order.subtotal %></h1>
+<div class="row">
+	<div class="col-md-3 col-md-offset-6">
+		<h1>Total: $<%= current_order.subtotal %></h1>
+	</div>
+	<div class="col-md-2" >
+		<h1><%= link_to "Checkout", new_store_charge_path, class: "btn btn-success" %></h1>
+	</div>
+</div>

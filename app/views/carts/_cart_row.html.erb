@@ -9,7 +9,6 @@
 		
 		<div class="col-md-8">				
 			
-			
 				<%= form_for :order_line, url: store_order_line_path(@store.id, order_line.id), method: :patch, remote: true do |f| %>
 
 					<h4 class="text-right">Unit Price: $<%= order_line.product.price_in_cents %></h4>
