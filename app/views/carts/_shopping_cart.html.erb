@@ -9,7 +9,7 @@
 <% end %>
 
 
-<% if @order_lines.size == 0 %>
+<% unless @order_lines.present? %>
 	<p class="text-center">
 		There are no items in your shopping cart. Please <%= link_to "go back", store_products_path %> and add some items in your cart.
 	</p>

@@ -3,9 +3,8 @@
 		<ul class="nav navbar-nav navbar-left">
 			<li><%= link_to 'Home', root_path %></li>
 			
-			<% if @store.present? %>
-		 		<li><%= link_to "Shop Now", store_products_path(@store.id) %></li>
-		 	
+			<% if current_store.present? %>
+		 		<li><%= link_to "Shop Now", store_products_path(current_store.id) %></li>
 		 	<% end %>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
@@ -16,12 +15,8 @@
 		  		<li><%= link_to 'Sign Up', new_user_registration_path %></li> 
 		  		<li><%= link_to 'Sign In', user_session_path %></li>
 		 	<% end %>
-
-		 	
-
 		 	<% if current_order.present? %>
-
-			 	<li class="cart-text"><%= link_to "#{current_order.total_items} Items in Cart ( $ #{current_order.subtotal} )", store_cart_path(@store.id), class: "btn btn-link" %></li>	 
+			 	<li class="cart-text"><%= render partial: "layouts/cart_text" %></li>
 			<% end %>
 		</ul>
 	</div>

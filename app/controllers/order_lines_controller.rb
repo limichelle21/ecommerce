@@ -1,7 +1,8 @@
 class OrderLinesController < ApplicationController
 
 	before_action :get_store, only: [:create, :update, :destroy]
-	before_action :set_order, only: [:create, :update, :destroy]
+
+	after_filter { flash.discard if request.xhr? }
 
 	def create
 
@@ -14,16 +15,16 @@ class OrderLinesController < ApplicationController
 		
 		#check if product.id already exists in an order_line
 
-		@order_line = @order.order_lines.where(product_id: params[:order_line][:product_id]).first
+		@order_line = current_order.order_lines.where(product_id: params[:order_line][:product_id]).first
 
 		if @order_line.present? 
 			@order_line.quantity += params[:order_line][:quantity].to_i
 		else
-			@order_line = @order.order_lines.build(order_line_params)
+			@order_line = current_order.order_lines.build(order_line_params)
 		end			
 
 	    if @order_line.save
-	      session[:order_id] = @order_line.order.id 
+	      session["current_order_id_#{current_store.id}"] = @order_line.order.id 
 	      flash[:notice] = "Product was added to Cart"
 	      redirect_to store_products_path
 	    else
@@ -44,12 +45,13 @@ class OrderLinesController < ApplicationController
 	      flash[:error] = "Item was not updated in the cart. Please try again."
 	    end
 
+	    @order_lines = @order.order_lines
+
 	    respond_to do |format|
 	      format.html
 	      format.js
 	    end
 
-	    @order_lines = @order.order_lines
 	end
 
 	def destroy
@@ -62,12 +64,13 @@ class OrderLinesController < ApplicationController
 	      flash[:error] = "There was an error removing item from cart. Please try again."
 	    end
 
+	   	@order_lines = @order.order_lines
+
 	    respond_to do |format|
 	      format.html
 	      format.js
 	    end
 
-	    @order_lines = @order.order_lines
 	end
 
 	private
@@ -79,11 +82,6 @@ class OrderLinesController < ApplicationController
 	  def get_store
 	  	@store = Store.friendly.find(params[:store_id])
 	  end
-
-	  def set_order
-	  	@order = current_order
-	  end
-
 
 
 end

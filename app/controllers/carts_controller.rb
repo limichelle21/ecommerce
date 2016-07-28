@@ -7,7 +7,7 @@ class CartsController < ApplicationController
   end
 
   def clear_cart
-  	session[:current_order_id] = nil
+  	session["current_order_id_#{current_store.id}"] = nil
   	redirect_to store_path
   end
 
