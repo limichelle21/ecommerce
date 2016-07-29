@@ -1,20 +1,117 @@
-<%= form_tag store_charges_path do %>
-	<article>
-		<% if flash[:error].present? %>
-			<div id="error_explanation">
-				<p><%= flash[:error] %></p>
-			</div>
-		<% end %>
-		<label class="amount">
-			<span>Amount: $5.00</span>
-		</label>
-	</article>
+<h1>Checkout your Order</h1>
+<h4>Total Price: $<%= current_order.subtotal %></h4>
+
+	
 
 
-	<h4>Checkout Now</h4>
-		<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-          data-description="Order Payment"
-          data-amount="500"
-          data-locale="auto"></script>
+
+<%= form_tag store_charges_path, id: 'stripeForm' do -%>
+   <script src="https://checkout.stripe.com/checkout.js"></script>
+   <article>
+     <%= label_tag 'amount', 'To Pay', class: 'amount' %>
+     <%= label_tag 'amount', "$#{@amount}.00", class: "amount-figure" %>
+   </article> <br>
+   <button id="stripe-button">Place Order</button>
+   <%= hidden_field_tag 'stripeToken' %>
+   <%= hidden_field_tag 'stripeEmail' %>
+   <%= hidden_field_tag 'stripeAmount' %>
+ 
+   <script>
+     var handler = StripeCheckout.configure({
+       key: "<%= Settings[Rails.env]['stripe']['publishable_key'] %>",
+       token: function (token, args) {
+         $("#stripeToken").value = token.id;
+         $("#stripeEmail").value = token.email;
+         $("#stripeAmount").value = <%= @amount %>;
+         $("#stripeForm").submit();
+       }
+     });
+ 
+     $('#stripe-button').on('click', function (e) {
+       // Open Checkout with further options
+       handler.open({
+         name: 'Your customer name',
+         description: 'Your description goes here',
+         amount: <%= @amount * 100 %>
+       });
+     e.preventDefault();
+     });
+ 
+     $(window).on('popstate', function() {
+       handler.close();
+     });
+   </script>
+ <% end %>
+
+
+
+
+
+
+
+
+
+<%= form_for @order do |f| %>
+	<% if @order.errors.any? %>
+		<div class="alert alert-danger">
+			<ul>
+				<% @order.errors.full_messages.each do |msg| %>
+					<li><%= msg %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
+
+	<%= f.hidden_field :stripe_card_token %>
+
+	<div class="field">
+		<%= f.label :full_name %>
+		<%= f.text_field_tag :name %>
+	</div>
+	<div class="field">
+		<%= f.label :shipping_address_1 %>
+		<%= f.text_field_tag :address_1 %>
+	</div>
+	<div class="field">
+		<%= f.label :shipping_address_2 %>
+		<%= f.text_field_tag :address_2 %>
+	</div>
+	<div class="field">
+		<%= f.label :phone_number %>
+		<%= f.text_field_tag :phone_number %>
+	</div>
+
+	<div class="field">
+		<%= f.label :email %>
+		<%= f.text_field :email %>
+ 	</div>
+
+
+ 	<div class="field">
+ 		<%= f.label_tag :card_number, "Credit Card Number" %>
+ 		<%= f.text_field_tag :card_number, nil, name: nil %>
+ 	</div>
+
+ 	<div class="field">
+ 		<%= f.label_tag :card_code, "CVV Security Code" %>
+ 		<%= text_field_tag :card_code, nil, name: nil %>
+ 	</div>
+
+ 	<div class="field">
+ 		<%= label_tag :card_month, "Card Expiration" %>
+    	<%= select_month nil, {add_month_numbers: true}, {name: nil, id: "card_month"} %>
+    	<%= select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15}, {name: nil, id: "card_year"} %>
+	</div>
+
+	<div class="actions">
+		<%= f.submit "Place Order" %>
+	</div>
 <% end %>
+
+<div id="stripe_error">
+	<noscript>JavaScript is not enabled and is required for this form. First enable it in your web browser settings.</noscript>
+</div>
+
+
+
+

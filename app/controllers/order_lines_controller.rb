@@ -36,7 +36,7 @@ class OrderLinesController < ApplicationController
 
 
 	def update
-		@order_line = @order.order_lines.find(params[:id])
+		@order_line = current_order.order_lines.find(params[:id])
 	    @order_line.quantity = params[:order_line][:quantity].to_i
 	 
 	    if @order_line.save
@@ -45,7 +45,7 @@ class OrderLinesController < ApplicationController
 	      flash[:error] = "Item was not updated in the cart. Please try again."
 	    end
 
-	    @order_lines = @order.order_lines
+	    @order_lines = current_store.order_lines
 
 	    respond_to do |format|
 	      format.html
@@ -55,7 +55,7 @@ class OrderLinesController < ApplicationController
 	end
 
 	def destroy
-		@order_line = @order.order_lines.find(params[:id])
+		@order_line = current_order.order_lines.find(params[:id])
 
 	    if @order_line.destroy
 	      flash[:notice] = "Item was removed from cart successfully."
@@ -64,7 +64,7 @@ class OrderLinesController < ApplicationController
 	      flash[:error] = "There was an error removing item from cart. Please try again."
 	    end
 
-	   	@order_lines = @order.order_lines
+	   	@order_lines = current_order.order_lines
 
 	    respond_to do |format|
 	      format.html
