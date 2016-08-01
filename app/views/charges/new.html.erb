@@ -1,9 +1,6 @@
 <h1>Checkout your Order</h1>
 <h4>Total Price: $<%= current_order.subtotal %></h4>
 
-	
-
-
 
 <%= form_tag store_charges_path, id: 'stripeForm' do -%>
    <script src="https://checkout.stripe.com/checkout.js"></script>
@@ -14,7 +11,11 @@
    <button id="stripe-button">Place Order</button>
    <%= hidden_field_tag 'stripeToken' %>
    <%= hidden_field_tag 'stripeEmail' %>
+   <%= hidden_field_tag 'stripeName' %>
+   <%= hidden_field_tag 'stripeBillingAddress' %>
+   <%= hidden_field_tag 'stripeShippingAddress' %>
    <%= hidden_field_tag 'stripeAmount' %>
+   
  
    <script>
      var handler = StripeCheckout.configure({
@@ -22,6 +23,9 @@
        token: function (token, args) {
          $("#stripeToken").value = token.id;
          $("#stripeEmail").value = token.email;
+         $("#stripeName").value = <% current_store.name %>
+         $("#stripeBillingAddress").value = token.billingAddress;
+         $("#stripeShippingAddress").value = token.shippingAddress; 
          $("#stripeAmount").value = <%= @amount %>;
          $("#stripeForm").submit();
        }
@@ -42,11 +46,6 @@
      });
    </script>
  <% end %>
-
-
-
-
-
 
 
 
@@ -86,26 +85,6 @@
 		<%= f.text_field :email %>
  	</div>
 
-
- 	<div class="field">
- 		<%= f.label_tag :card_number, "Credit Card Number" %>
- 		<%= f.text_field_tag :card_number, nil, name: nil %>
- 	</div>
-
- 	<div class="field">
- 		<%= f.label_tag :card_code, "CVV Security Code" %>
- 		<%= text_field_tag :card_code, nil, name: nil %>
- 	</div>
-
- 	<div class="field">
- 		<%= label_tag :card_month, "Card Expiration" %>
-    	<%= select_month nil, {add_month_numbers: true}, {name: nil, id: "card_month"} %>
-    	<%= select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15}, {name: nil, id: "card_year"} %>
-	</div>
-
-	<div class="actions">
-		<%= f.submit "Place Order" %>
-	</div>
 <% end %>
 
 <div id="stripe_error">

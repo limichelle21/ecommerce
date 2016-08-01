@@ -9,9 +9,8 @@ class ChargesController < ApplicationController
 
 		# amount in cents
 
-		# want the @amount to be current_order.subtotal. 
 
-		@amount = 2500
+		@amount = current_order.subtotal
 
 		#create customer in Stripe
 		customer = Stripe::Customer.create(

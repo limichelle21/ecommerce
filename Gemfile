@@ -44,7 +44,7 @@ gem 'adminlte-generators'
 gem 'carrierwave'
 
 #fog for Amazon S3 support
-gem 'fog'
+gem 'fog-aws'
 
 gem 'devise'
 

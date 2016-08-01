@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   }
 
   namespace :dashboard do 
-    resources :stores, only: [:new, :create, :update] do
+    resource :store, only: [:new, :create, :update] do
       resources :products
       resources :orders, only: [:index, :show, :destroy]
       resources :order_lines, only: [:index, :show]

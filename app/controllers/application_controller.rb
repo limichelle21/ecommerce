@@ -10,12 +10,10 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   helper_method :current_store
-  before_filter :current_store
+  before_action :current_store
 
   helper_method :current_order
-  before_filter :current_order
-
-  
+  before_action :current_order
 
 
   # def current_order_2
@@ -35,7 +33,6 @@ class ApplicationController < ActionController::Base
   def current_store
     @current_store = Store.friendly.find(params[:store_id])
   end
-
 
 
 
