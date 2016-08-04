@@ -30,7 +30,9 @@ RSpec.describe ProductsController, type: :controller do
     describe "POST create" do 
       it "returns http redirect" do 
         post :create, product: { title: RandomData.random_sentence, body: RandomData.random_paragraph}
-
+      end
+    end
+    
   end
 
 
@@ -71,8 +73,8 @@ RSpec.describe ProductsController, type: :controller do
         expect(response).to render_template :new
       end
 
-      it "instantiates @product" do 
-
+      # it "instantiates @product" do 
+        
 
     end
 

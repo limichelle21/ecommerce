@@ -1,5 +1,8 @@
 class ChargesController < ApplicationController
 
+require 'stripe'
+Stripe.api_key = Rails.configuration.stripe['sripe_api_key']
+
 	# show a credit card form using Checkout
 	def new
 	end

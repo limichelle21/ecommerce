@@ -1,32 +1,65 @@
-<h1>Checkout your Order</h1>
-<h4>Total Price: $<%= current_order.subtotal %></h4>
+<script src="https://checkout.stripe.com/checkout.js"></script>
 
+<div class="container">
+<%= form_tag store_charges_path, id: 'stripeForm' do %>
+  <h1>Place your Order</h1>
+    <div class="col-md-6 row">
+      <div class="form-group">
+        <%= label_tag :full_name %>
+        <%= text_field_tag :name, nil, class: "form-control" %> 
+      </div>
+      <div class="form-group">
+        <%= label_tag :street_address %>
+        <small class="form-text text-muted">Please enter your shipping address</small>
+        <%= text_field_tag :street_address, nil, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= label_tag :city %>
+        <%= text_field_tag :city, nil, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= label_tag :state %>
+        <%= text_field_tag :state, nil, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= label_tag :zip_code %>
+        <%= number_field_tag :zip_code, nil, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= label_tag :phone_number %>
+        <%= telephone_field_tag :phone_number, nil, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= label_tag :email %>
+        <%= email_field_tag :email, nil, class: "form-control" %>
+      </div>
 
-<%= form_tag store_charges_path, id: 'stripeForm' do -%>
-   <script src="https://checkout.stripe.com/checkout.js"></script>
    <article>
-     <%= label_tag 'amount', 'To Pay', class: 'amount' %>
-     <%= label_tag 'amount', "$#{@amount}.00", class: "amount-figure" %>
-   </article> <br>
-   <button id="stripe-button">Place Order</button>
-   <%= hidden_field_tag 'stripeToken' %>
-   <%= hidden_field_tag 'stripeEmail' %>
-   <%= hidden_field_tag 'stripeName' %>
-   <%= hidden_field_tag 'stripeBillingAddress' %>
-   <%= hidden_field_tag 'stripeShippingAddress' %>
-   <%= hidden_field_tag 'stripeAmount' %>
+     <%= label_tag 'amount', 'Total Price', class: 'amount' %>
+     <%= label_tag 'amount', "$#{current_order.subtotal}.00", class: "amount-figure" %>
+   </article>
+
+   <div class="row text-center">
+     <button id="stripe-button">Place Order</button>
+       <%= hidden_field_tag 'stripeToken' %>
+       <%= hidden_field_tag 'stripeEmail' %>
+       <%= hidden_field_tag 'stripeName' %>
+       <%= hidden_field_tag 'stripeBillingAddress' %>
+       <%= hidden_field_tag 'stripeShippingAddress' %>
+       <%= hidden_field_tag 'stripeAmount' %>
+   </div>
    
  
    <script>
      var handler = StripeCheckout.configure({
-       key: "<%= Settings[Rails.env]['stripe']['publishable_key'] %>",
+       key: "<%= Rails.configuration.stripe['publishable_key'] %>",
        token: function (token, args) {
          $("#stripeToken").value = token.id;
          $("#stripeEmail").value = token.email;
-         $("#stripeName").value = <% current_store.name %>
+         $("#stripeName").value = <% current_store.name %>;
          $("#stripeBillingAddress").value = token.billingAddress;
          $("#stripeShippingAddress").value = token.shippingAddress; 
-         $("#stripeAmount").value = <%= @amount %>;
+         $("#stripeAmount").value = <%= current_order.subtotal %>;
          $("#stripeForm").submit();
        }
      });
@@ -34,9 +67,9 @@
      $('#stripe-button').on('click', function (e) {
        // Open Checkout with further options
        handler.open({
-         name: 'Your customer name',
+         name: <%= current_store.name %>,
          description: 'Your description goes here',
-         amount: <%= @amount * 100 %>
+         amount: <%= current_order.subtotal * 100 %>
        });
      e.preventDefault();
      });
@@ -45,52 +78,10 @@
        handler.close();
      });
    </script>
+
  <% end %>
 
-
-
-
-<%= form_for @order do |f| %>
-	<% if @order.errors.any? %>
-		<div class="alert alert-danger">
-			<ul>
-				<% @order.errors.full_messages.each do |msg| %>
-					<li><%= msg %></li>
-				<% end %>
-			</ul>
-		</div>
-	<% end %>
-
-	<%= f.hidden_field :stripe_card_token %>
-
-	<div class="field">
-		<%= f.label :full_name %>
-		<%= f.text_field_tag :name %>
-	</div>
-	<div class="field">
-		<%= f.label :shipping_address_1 %>
-		<%= f.text_field_tag :address_1 %>
-	</div>
-	<div class="field">
-		<%= f.label :shipping_address_2 %>
-		<%= f.text_field_tag :address_2 %>
-	</div>
-	<div class="field">
-		<%= f.label :phone_number %>
-		<%= f.text_field_tag :phone_number %>
-	</div>
-
-	<div class="field">
-		<%= f.label :email %>
-		<%= f.text_field :email %>
- 	</div>
-
-<% end %>
-
-<div id="stripe_error">
-	<noscript>JavaScript is not enabled and is required for this form. First enable it in your web browser settings.</noscript>
 </div>
-
 
 
 
