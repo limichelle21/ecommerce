@@ -1,8 +1,8 @@
 class Dashboard::ProductsController < DashboardController
 
+  before_action :get_store
 
   def index
-    @store = Store.friendly.find(params[:store_id])
     @products = @store.products.all
   end
 
@@ -11,9 +11,24 @@ class Dashboard::ProductsController < DashboardController
   end
 
   def new
-    @store = Store.friendly.find(params[:store_id])
     @product = Product.new
     authorize @product
+  end
+
+
+  def create
+    @product = Product.new
+    @product = @store.products.build(product_params)
+
+    authorize @product
+
+    if @product.save
+      flash[:notice] = "Product was added to store"
+      redirect_to dashboard_store_products_path
+    else
+      flash[:error] = "There was an error saving the product."
+      render :new
+    end
   end
 
 
@@ -21,24 +36,6 @@ class Dashboard::ProductsController < DashboardController
     @product = Product.friendly.find(params[:id])
     authorize @product
   end
-
-
-  def create
-    @product = Product.new
-    @store = Store.friendly.find(params[:store_id])
-    @product = @store.products.build(product_params)
-
-    authorize @product
-
-    if @product.save
-      flash[:notice] = "Product was added to store"
-      redirect_to @product
-    else
-      flash[:error] = "There was an error saving the product."
-      render :new
-    end
-  end
-
 
 
   def update
@@ -49,21 +46,20 @@ class Dashboard::ProductsController < DashboardController
 
     if @product.save
       flash[:notice] = "Product was updated."
-      redirect_to [@product.store, @product]
+      redirect_to dashboard_store_products_path
     else
       flash[:error] = "There was an error saving the product. Please try again."
       render :edit
     end
   end
 
-
-
   def destroy
     @product = Product.friendly.find(params[:id])
     authorize @product
 
     if @product.destroy
-      flash[:notice] = "\"#{product.title}\" was deleted successfully."
+      flash[:notice] = "\"#{@product.title}\" was deleted successfully."
+      redirect_to dashboard_store_products_path and return
     else
       flash[:error] = "There was an error deleting the product."
     end
@@ -78,8 +74,12 @@ class Dashboard::ProductsController < DashboardController
   private
 
   def product_params
-    params.require(:product).permit(:title, :description, :sku, :price, :count)
+    params.require(:product).permit(:title, :description, :sku, :price_in_cents, :count)
   end
 
+
+  def get_store
+   @store = Store.friendly.find(params[:store_id])
+  end
 
 end

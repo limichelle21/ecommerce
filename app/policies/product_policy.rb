@@ -32,7 +32,8 @@ class ProductPolicy < ApplicationPolicy
 	end
 
 	def update?
-		is_owner? && product.store.owner == user
+		is_owner?
+		# is_owner? && product.store.owner == user
 	end
 
 	def destroy?

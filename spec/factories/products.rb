@@ -1,5 +1,7 @@
 FactoryGirl.define do
   factory :product do
+    store :store_id
+    owner :owner_id
     title "MyString"
     description "MyText"
     sku 1

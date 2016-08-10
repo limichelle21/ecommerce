@@ -5,7 +5,59 @@
 			<h4>Edit Product Details</h4>
 		</div>
 		<div class="col-md-9" id="product-input">
-			<%= render partial: 'product', locals: { store: @store, product: @product } %>
+			
+		<%= form_for(@product, url: dashboard_store_product_path, method: :patch) do |f| %>
+
+			<% if @product.errors.any? %>
+				<div class="alert alert-danger">
+					<h4><%= pluralize(@product.errors.count, "error") %>.</h4>
+					<ul>
+						<% @product.errors.full_messages.each do |msg| %>
+						<li><%= msg %></li>
+						<% end %>
+					</ul>
+				</div>
+			<% end %>
+
+			<%= form_group_tag(@product.errors[:title]) do %>
+				<%= f.label :title %>
+				<%= f.text_field :title, class: 'form-control', :value => @product.title %>
+			<% end %>
+
+			<%= form_group_tag(@product.errors[:description]) do %>
+				<%= f.label :description %>
+				<%= f.text_area :description, rows: 6, class: 'form-control', :value => @product.description %>
+			<% end %>
+
+			<%= form_group_tag(@product.errors[:sku]) do %>
+				<%= f.label :sku %>
+				<%= f.number_field :sku, class: 'form-control', :value => @product.sku %>
+			<% end %>
+
+			<%= form_group_tag(@product.errors[:price_in_cents]) do %>
+				<%= f.label :price %>
+				<%= f.number_field :price_in_cents, min: 0, class: 'form-control', :value => @product.price_in_cents %>
+			<% end %>
+
+			<%= form_group_tag(@product.errors[:count]) do %>
+				<%= f.label :count %>
+				<%= f.number_field :count, class: 'form-control', :value => @product.count %>
+			<% end %>
+
+			<%= form_group_tag(@product.errors[:count]) do %>
+				<%= f.file_field :picture %>
+			<% end %>
+
+
+			<div class="form-group">
+				<%= f.submit "Save", class: "btn btn-success" %>
+			</div>
+
+
+		<% end %>
+
+
+
 		</div>
 	</div>
 </div>

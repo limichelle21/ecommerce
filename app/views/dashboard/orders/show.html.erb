@@ -1,8 +1,7 @@
 <div class="main">
-  <h1>Order Summary</h1>
+  <h2>Order Summary</h2>
   	<div class="container">
 		<div class="col-md-3">
-  			<h2>Customer Information</h2>
   			<%= render 'customer', customer: @order.customer %>
   		</div>
 
@@ -21,9 +20,13 @@
   				<tbody>
   					<% @order.order_lines.each do |order_line| %>
   					<tr> 
-  						<%= render "shared/order_lines/order_line", order_line: @order.order_line %>
+  						<td><%= link_to order_line.product.title, store_product_path %></td>
+              <td>$<%= order_line.product.price_in_cents %></td>
+              <td><%= order_line.quantity %></td>
+              <td>$<%= order_line.total_price %></td>
   					</tr>
   					<% end %>
+
   				</tbody>
   			</table>
 

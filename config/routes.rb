@@ -7,11 +7,12 @@ Rails.application.routes.draw do
   }
 
   namespace :dashboard do 
-    resource :store, only: [:new, :create, :update] do
-      resources :products
-      resources :orders, only: [:index, :show, :destroy]
-      resources :order_lines, only: [:index, :show]
-    end
+      root 'products#index'
+      resources :stores, only: [:new, :create] do 
+        resources :products
+        resources :orders, only: [:index, :show, :destroy]
+        resources :order_lines, only: [:index, :show]
+      end
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

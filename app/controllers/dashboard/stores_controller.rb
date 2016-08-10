@@ -10,13 +10,12 @@ class Dashboard::StoresController < DashboardController
 	end
 
 	def create
-		@store = Store.new
 		@owner = current_user
 		@store = @owner.stores.build(store_params)
 		
 		if @store.save
 			flash[:notice] = "Store was created."
-	  		redirect_to @store
+	  		redirect_to dashboard_root_path
 	    else
 	      flash[:error] = "There was an error creating the store."
 	      render :new
@@ -24,23 +23,23 @@ class Dashboard::StoresController < DashboardController
   	end
 
 		
-  	def edit
-  		@store = Store.friendly.find(params[:id])
-  	end
+ #  	def edit
+ #  		@store = Store.friendly.find(params[:id])
+ #  	end
 	
 
-	def update
-		@store = Store.friendly.find(params[:id])
-		@store.assign_attributes(store_params)
+	# def update
+	# 	@store = Store.friendly.find(params[:id])
+	# 	@store.assign_attributes(store_params)
 
-		if @store.save
-			flash[:notice] = "Store was updated."
-			redirect_to @store
-		else
-			flash[:error] = "There was an error updating the store. Please try again."
-			render :edit
-		end
-	end
+	# 	if @store.save
+	# 		flash[:notice] = "Store was updated."
+	# 		redirect_to dashboard_store_products_path
+	# 	else
+	# 		flash[:error] = "There was an error updating the store. Please try again."
+	# 		render :edit
+	# 	end
+	# end
 
 
   private

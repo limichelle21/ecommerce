@@ -1,3 +1,4 @@
+
 FactoryGirl.define do
   factory :order_line do
     quantity 1

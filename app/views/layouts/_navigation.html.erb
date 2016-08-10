@@ -6,6 +6,7 @@
 			<% if current_store.present? %>
 		 		<li><%= link_to "Shop Now", store_products_path(current_store.id) %></li>
 		 	<% end %>
+		 
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 	  		<% if current_user %>

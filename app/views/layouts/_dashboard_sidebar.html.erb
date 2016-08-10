@@ -23,6 +23,11 @@
   <!-- /.search form -->
   <!-- sidebar menu: : style can be found in sidebar.less -->
   <ul class="sidebar-menu">
-   
+
+    <% if current_store.present? %>
+     <li><%= link_to "All Products", dashboard_store_products_path(current_store) %></li>
+     <li><%= link_to "All Orders", dashboard_store_orders_path(current_store) %></li>
+   <% end %>
+
   </ul>
 </section>

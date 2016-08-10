@@ -8,7 +8,6 @@
 
 include Faker
 
-
 10.times do 
 	owner = Owner.create!(
 		email: Faker::Internet.email,
@@ -24,10 +23,17 @@ include Faker
 
 owners = Owner.all
 
+
 10.times do 
 	customer = Customer.create!(
 		email: Faker::Internet.email,
-		password: Faker::Internet.password
+		password: Faker::Internet.password,
+		name: Faker::Name.name,
+		street_address: Faker::Address.street_address,
+		city: Faker::Address.city,
+		state: Faker::Address.state_abbr,
+		zip_code: Faker::Address.zip_code,
+		phone_number: Faker::PhoneNumber.phone_number
 		)
 end
 
@@ -44,11 +50,11 @@ end
 
 stores = Store.all
 
-40.times do 
+100.times do 
 	product = Product.create!(
 		store: stores.sample,
 		title: Faker::Commerce.product_name,
-		price_in_cents: Faker::Commerce.price,
+		price_in_cents: Faker::Number.between(1, 1000),
 		description: Faker::Lorem.sentence,
 		sku: Faker::Number.number(4),
 		count: Faker::Number.digit
@@ -69,6 +75,7 @@ end
 
 orders = Order.all
 
+
 60.times do
 	order_line = OrderLine.create!(
 		product: products.sample, 
@@ -79,6 +86,8 @@ orders = Order.all
 end
 
 order_lines = OrderLine.all
+
+
 
 
 

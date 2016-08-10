@@ -13,9 +13,11 @@
 			<div id="product-description">
 				<h4 class="lead"><%= @product.description %></h4>
 			</div>		
-			<h4><%= button_to 'Edit Product', edit_dashboard_store_product_path(product_id: @product), class: 'btn btn-success', remote: true %></h4>
+			<h4><%= link_to 'Edit Product', edit_dashboard_store_product_path(current_store.id, @product.id), class: 'btn btn-success' %></h4>
         	<br />
-       		<h4><%= button_to 'Delete Product', dashboard_store_product_path(product_id: @product), class: 'btn btn-danger', remote: true %></h4>
+
+       		<h4><%= link_to 'Delete Product', dashboard_store_product_path(current_store.id, @product.id), method: :delete, data: { confirm: 'Are you sure?'}, class: 'btn btn-danger' %></h4>
+
 		</div>
 	</div>
 </div>

@@ -3,7 +3,7 @@
 	<div class="row">
 		
 		<div class="container">
-			<%= form_for dashboard_store_path do |f| %>
+			<%= form_for :store, url: dashboard_stores_path do |f| %>
 
 				<% if @store.errors.any? %>
 					<div class="alert alert-danger">

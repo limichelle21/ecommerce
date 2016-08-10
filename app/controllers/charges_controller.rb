@@ -9,9 +9,7 @@ Stripe.api_key = Rails.configuration.stripe['sripe_api_key']
 
 	# create the actual charge by calling Stripe API
 	def create
-
 		# amount in cents
-
 
 		@amount = current_order.subtotal
 

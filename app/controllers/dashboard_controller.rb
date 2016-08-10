@@ -1,6 +1,6 @@
 class DashboardController < ApplicationController
 
-
+	skip_before_action :current_order
 
 	layout 'dashboard'
 	# to correspond with the dashboard layouts for view 
