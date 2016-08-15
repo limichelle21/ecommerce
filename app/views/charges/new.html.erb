@@ -1,4 +1,6 @@
-<script src="https://checkout.stripe.com/checkout.js"></script>
+<script type="text/javascript">
+  Stripe.setPublishableKey('<%= ENV["stripe_publishable_key"] %>');
+</script>
 
 <div class="container">
 <%= form_tag store_charges_path, id: 'stripeForm' do %>
@@ -33,50 +35,104 @@
         <%= label_tag :email %>
         <%= email_field_tag :email, nil, class: "form-control" %>
       </div>
+      
+      <div class="form-group">
+        <%= label_tag :credit_card_number %>
+        <input type="text" size="20" data-stripe="number">
+      </div>
+
+      <div class="form-group">
+        <%= label_tag :CVC %>
+        <input type="text" size="4" data-stripe="cvc">
+      </div>
+
+      <div class="form-group">
+        <%= label_tag :expiration_date %>
+         <input type="text" size="2" data-stripe="exp_month">
+         <span> / </span>
+         <input type="text" size="2" data-stripe="exp_year">
+      </div>
+
 
    <article>
      <%= label_tag 'amount', 'Total Price', class: 'amount' %>
-     <%= label_tag 'amount', "$#{current_order.subtotal}.00", class: "amount-figure" %>
+     <%= label_tag 'amount', "$#{current_order.subtotal}", class: "amount-figure" %>
    </article>
 
    <div class="row text-center">
      <button id="stripe-button">Place Order</button>
-       <%= hidden_field_tag 'stripeToken' %>
-       <%= hidden_field_tag 'stripeEmail' %>
-       <%= hidden_field_tag 'stripeName' %>
-       <%= hidden_field_tag 'stripeBillingAddress' %>
-       <%= hidden_field_tag 'stripeShippingAddress' %>
-       <%= hidden_field_tag 'stripeAmount' %>
+
    </div>
    
  
    <script>
-     var handler = StripeCheckout.configure({
-       key: "<%= Rails.configuration.stripe['publishable_key'] %>",
-       token: function (token, args) {
-         $("#stripeToken").value = token.id;
-         $("#stripeEmail").value = token.email;
-         $("#stripeName").value = <% current_store.name %>;
-         $("#stripeBillingAddress").value = token.billingAddress;
-         $("#stripeShippingAddress").value = token.shippingAddress; 
-         $("#stripeAmount").value = <%= current_order.subtotal %>;
-         $("#stripeForm").submit();
-       }
-     });
+
+    $(document).ready(function() {
+      var $form = $('#stripeForm');
+      console.log("form", $form);
+
+      $form.submit(function(event) {
+         event.preventDefault();
+
+        // Disable the submit button to prevent repeated clicks:
+        $form.find('#stripe-button').prop('disabled', true);
+
+        // Request a token from Stripe:
+        Stripe.card.createToken($form, stripeResponseHandler);
+
+        // Prevent the form from being submitted:
+        return false;
+      });
+    });
+
+    function stripeResponseHandler(status, response) {
+      // Grab the form:
+      var $form = $('#stripeForm');
+
+      if (response.error) { // Problem!
+
+        // Show the errors on the form:
+        $form.find('.payment-errors').text(response.error.message);
+        $form.find('#stripe-button').prop('disabled', false); // Re-enable submission
+
+      } else { // Token was created!
+
+        // Get the token ID:
+        var token = response.id;
  
-     $('#stripe-button').on('click', function (e) {
-       // Open Checkout with further options
-       handler.open({
-         name: <%= current_store.name %>,
-         description: 'Your description goes here',
-         amount: <%= current_order.subtotal * 100 %>
-       });
-     e.preventDefault();
-     });
+        // Insert the token ID into the form so it gets submitted to the server:
+        $form.append($('<input type="hidden" name="stripeToken">').val(token));
+
+        // Submit the form:
+        $form.get(0).submit();
+      }
+    };
+     // var handler = StripeCheckout.configure({
+     //   key: "<%= ENV['stripe_publishable_key'] %>",
+     //   token: function (token, args) {
+     //     $("#stripeToken").value = token.id;
+     //     $("#stripeEmail").value = token.email;
+     //     $("#stripeName").value = <% current_store.name %>;
+     //     $("#stripeBillingAddress").value = token.billingAddress;
+     //     $("#stripeShippingAddress").value = token.shippingAddress; 
+     //     $("#stripeAmount").value = <%= current_order.subtotal %>;
+     //     $("#stripeForm").submit();
+     //   }
+     // });
  
-     $(window).on('popstate', function() {
-       handler.close();
-     });
+     // $('#stripe-button').on('click', function (e) {
+     //   // Open Checkout with further options
+     //   handler.open({
+     //     name: <%= current_store.name %>,
+     //     description: 'Your description goes here',
+     //     amount: <%= current_order.subtotal * 100 %>
+     //   });
+     // e.preventDefault();
+     // });
+ 
+     // $(window).on('popstate', function() {
+     //   handler.close();
+     // });
    </script>
 
  <% end %>

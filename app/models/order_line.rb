@@ -35,7 +35,7 @@ class OrderLine < ActiveRecord::Base
 
 
 	def total_price
-		unit_price * quantity
+		unit_price * quantity * 100
 	end
 
 	# which record is actually doing the multiplication?

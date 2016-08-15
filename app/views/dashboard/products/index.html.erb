@@ -1,5 +1,5 @@
 <div class="container">
-       <h2>All Products - Total: <%= @products.count %> products </h2>
+       <h2 class="js-products-count"><%= @products.count %> products </h2>
 </div>
 
 <div class="container-fluid">
@@ -17,17 +17,17 @@
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody class="list-item">
                 <% @products.each do |product| %>
-                <tr>
-                    <td class="list-item"><%= product.title %></td>
-                    <td class="list-item"><%= product.description %></td>
-                    <td class="list-item">DISPLAY IMG</td>
-                    <td class="list-item"><%= product.price %></td>
-                    <td class="list-item"><%= product.sku %></td>
-                    <td class="list-item"><%= link_to 'Show', dashboard_store_product_path(@store.id, product.id) %></td>
-                    <td class="list-item"><%= link_to 'Edit', edit_dashboard_store_product_path(@store.id, product.id) %></td>
-                    <td class="list-item"><%= link_to 'Delete', dashboard_store_product_path(@store.id, product.id), method: :delete, data: { confirm: 'Are you sure?' }, remote: true %></td>
+                <tr id="product_<%= product.id %>">
+                    <td><%= product.title %></td>
+                    <td><%= product.description %></td>
+                    <td>DISPLAY IMG</td>
+                    <td><%= product.price %></td>
+                    <td><%= product.sku %></td>
+                    <td><%= link_to 'Show', dashboard_store_product_path(@store.id, product.id) %></td>
+                    <td><%= link_to 'Edit', edit_dashboard_store_product_path(@store.id, product.id) %></td>
+                    <td><%= link_to 'Delete', dashboard_store_product_path(@store.id, product.id), method: :delete, data: { confirm: 'Are you sure?' }, remote: true %></td>
                 </tr>
                 <% end %>
             </tbody>

@@ -2,6 +2,8 @@ class Dashboard::ProductsController < DashboardController
 
   before_action :get_store
 
+  after_filter { flash.discard if request.xhr? }
+
   def index
     @products = @store.products.all
   end
@@ -59,10 +61,10 @@ class Dashboard::ProductsController < DashboardController
 
     if @product.destroy
       flash[:notice] = "\"#{@product.title}\" was deleted successfully."
-      redirect_to dashboard_store_products_path and return
     else
       flash[:error] = "There was an error deleting the product."
     end
+    @products = @store.products.all
 
     respond_to do |format|
       format.html

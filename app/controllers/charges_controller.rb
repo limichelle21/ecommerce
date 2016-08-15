@@ -1,7 +1,7 @@
 class ChargesController < ApplicationController
 
 require 'stripe'
-Stripe.api_key = Rails.configuration.stripe['sripe_api_key']
+Stripe.api_key = ENV['stripe_api_key']
 
 	# show a credit card form using Checkout
 	def new
@@ -30,7 +30,6 @@ Stripe.api_key = Rails.configuration.stripe['sripe_api_key']
 
 		flash[:notice] = "Thanks for placing your order."
 		clear_cart
-		redirect_to store_path
 		
 		# if charge was successful or not
 
@@ -40,6 +39,14 @@ Stripe.api_key = Rails.configuration.stripe['sripe_api_key']
 			flash[:notice] = "Please try again"
 	
 	end
+
+	private
+
+	  def clear_cart
+	  	session["current_order_id_#{current_store.id}"] = nil
+	  	redirect_to store_path
+	  end
+
 
 
 end
