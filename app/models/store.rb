@@ -7,6 +7,8 @@ class Store < ActiveRecord::Base
 	# class_name: 'User', foreign_key: 'user_id'
 	has_many :products
 	has_many :orders
+	
+	has_many :customers
 
 	validates :owner, presence: true
 	validates :name, presence: true, uniqueness: true

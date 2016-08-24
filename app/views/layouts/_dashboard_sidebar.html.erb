@@ -2,11 +2,10 @@
   <!-- Sidebar user panel -->
   <div class="user-panel">
     <div class="pull-left image">
-      <img src="/img/avatar3.png" class="img-circle" alt="User Image" />
-    
+      <%= image_tag current_user.avatar_url(36), class: "gravatar" %>   
     </div>
     <div class="pull-left info">
-      <p>Hello, <%= current_user.name %></p>
+      <p><%= current_user.email %></p>
 
       <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
     </div>
@@ -27,6 +26,8 @@
     <% if current_store.present? %>
      <li><%= link_to "All Products", dashboard_store_products_path(current_store) %></li>
      <li><%= link_to "All Orders", dashboard_store_orders_path(current_store) %></li>
+     <li><%= link_to "View Store", store_path(current_store) %></li>
+     <li><%= link_to "Edit Account", edit_user_registration_path(current_user) %></li>
    <% end %>
 
   </ul>

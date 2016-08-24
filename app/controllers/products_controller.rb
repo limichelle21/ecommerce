@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  layout 'customer'
 
   before_action :get_store
 

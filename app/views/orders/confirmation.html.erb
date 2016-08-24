@@ -14,7 +14,14 @@
 	<% if @order.customer == current_user %>
 		<%= render 'order_lines/order_line_row' %>
 	<% end %>
+
+	<h2>Your Information</h2>
+		<p><%= @customer.name %></p>
+		<p><%= @customer.street_address %>, <%= @customer.city %>, <%= @customer.state %> <%= @customer.zip_code %></p>
+		<p><%= @customer.email %></p>
+		<p><%= @customer.phone_number %></p>
 		
 	<h2 id="total">Total: $<%= @order.subtotal %></h2>
+	<h3>Date Paid: <%= @order.date_paid %></h3>
 
 </div>

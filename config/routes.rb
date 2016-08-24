@@ -22,16 +22,26 @@ Rails.application.routes.draw do
    
   # ecommerce.com/matts-store
 
+  #   get 'products/:id' => 'catalog#view'
+
   root 'welcome#index'
 
   get ':store_id', to: 'stores#show', as: 'store'
   resources :stores, only: [:show], path: '/' do 
+    # resources :users, only: [:new]
+    get '/users/sign_up' => 'customers#new', as: 'sign_up'
+    post '/users/sign_up' => 'customers#create', as: 'user_sign_up'
+    get '/users/sign_in' => 'sessions#new', as: 'sign_in'
+    post '/users/sign_in' => 'sessions#create'
+    delete '/users/sign_out' => 'sessions#destroy', as: 'sign_out'
     resource :cart, only: [:show]
     resources :products, only: [:index, :show]
-    resources :orders, only: [:index, :show] 
+    resources :orders, only: [:index, :show]
+    get '/orders/:id/confirmation' => 'orders#confirmation', as: 'confirmation'
     resources :order_lines, only: [:create, :update, :destroy]
     resources :charges, only: [:new, :create]
   end   
+
 
 
 # path: '/'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160804070334) do
+ActiveRecord::Schema.define(version: 20160824144013) do
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20160804070334) do
     t.datetime "updated_at",     null: false
     t.integer  "customer_id"
     t.integer  "store_id"
+    t.integer  "charge_id"
   end
 
   add_index "orders", ["customer_id"], name: "index_orders_on_customer_id"

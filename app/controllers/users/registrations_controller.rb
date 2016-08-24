@@ -10,6 +10,7 @@ before_filter :configure_sign_up_params, only: [:create]
   # POST /resource
   def create
     super
+    #this is where I want the redirect to happen - to Store New
   end
 
   # GET /resource/edit
@@ -40,7 +41,7 @@ before_filter :configure_sign_up_params, only: [:create]
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:email, :password, :password_confirmation, :type) }
+    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username, :email, :password, :password_confirmation, :type) }
   end
 
   # If you have extra params to permit, append them to the sanitizer.
@@ -49,9 +50,13 @@ before_filter :configure_sign_up_params, only: [:create]
   # end
 
   # The path used after sign up.
-  # def after_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+  def after_sign_up_path_for(resource)
+    if current_user.type == "Owner"
+     new_dashboard_store_path
+   else
+     store_path
+    end
+  end
 
   # The path used after sign up for inactive accounts.
   # def after_inactive_sign_up_path_for(resource)

@@ -15,7 +15,7 @@ class Dashboard::StoresController < DashboardController
 		
 		if @store.save
 			flash[:notice] = "Store was created."
-	  		redirect_to dashboard_root_path
+	  		redirect_to dashboard_store_products_path(@store.id)
 	    else
 	      flash[:error] = "There was an error creating the store."
 	      render :new

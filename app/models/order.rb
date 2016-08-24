@@ -15,10 +15,6 @@ class Order < ActiveRecord::Base
 		order_lines.sum(:quantity)
 	end
 
-	
-
-	private
-
 
 
 end

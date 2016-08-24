@@ -1,6 +1,7 @@
 <nav class="navbar navbar-default" role="navigation">
 	<div class="navbar-collapse collapse">
 		<ul class="nav navbar-nav navbar-left">
+			
 			<% if current_store.present? %>
 				<li><%= link_to 'Home', store_path(current_store.id) %></li>
 		 		<li><%= link_to "Shop Now", store_products_path(current_store.id) %></li>
@@ -12,11 +13,11 @@
 		<ul class="nav navbar-nav navbar-right">
 	  		<% if current_user %>
 	  			<li><%= image_tag current_user.avatar_url(36), class: "gravatar" %></li>
-	  			<li><%= link_to current_user.email, user_session_path(current_user) %></li>
-		  		<li><%= link_to "Sign Out", destroy_user_session_path(current_user), method: :delete %></li>
+		  		<li><%= link_to current_user.email, user_session_path(current_user) %></li>
+		  		<li><%= link_to "Sign Out", store_sign_out_path(current_user), method: :delete %></li>
 	  		<% else %>
-		  		<li><%= link_to 'Sign Up', new_user_registration_path %></li> 
-		  		<li><%= link_to 'Sign In', user_session_path %></li>
+		  		<li><%= link_to 'Sign Up', store_sign_up_path %></li> 
+		  		<li><%= link_to 'Sign In', store_sign_in_path %></li>
 		 	<% end %>
 		 	<% if current_order.present? %>
 			 	<li class="cart-text"><%= render partial: "layouts/cart_text" %></li>
@@ -24,5 +25,4 @@
 		</ul>
 	</div>
 </nav>
-
 

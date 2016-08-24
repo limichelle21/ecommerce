@@ -4,17 +4,12 @@
 
       <h2>Sign up</h2>
 
-      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-        <%= devise_error_messages! %>
-
-        <div class="field">
-          <%= f.label :username %><br />
-          <%= f.text_field :username, autofocus: true %>
-        </div>
+      <%= form_for(:customer, url: store_sign_up_path(store_id: current_store.id)) do |f| %>
+     
 
         <div class="field">
           <%= f.label :email %><br />
-          <%= f.email_field :email %>
+          <%= f.email_field :email, autofocus: true %>
         </div>
 
         <div class="field">
@@ -32,8 +27,8 @@
 
         <div class="field">
           <br />
-          <%= f.hidden_field :type, value: 'Owner' %>
-          <%= f.label :type, 'Owner' %>
+          <%= f.hidden_field :type, value: 'Customer' %>
+          <%= f.label :type, 'Customer' %>
         </div>
 
         <div class="actions">
@@ -41,7 +36,6 @@
         </div>
       <% end %>
 
-      <%= render "devise/shared/links" %>
 
     </div>
   </div>

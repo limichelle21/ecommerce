@@ -13,10 +13,28 @@ class Users::SessionsController < Devise::SessionsController
 
   # DELETE /resource/sign_out
   def destroy
-    super
+    super 
   end
 
   # protected
+
+
+  def after_sign_in_path_for(resource)
+    if current_user.type == "Owner"
+      if current_store.present?
+       dashboard_store_products_path(store_id: current_store.id)
+     else
+        dashboard_store_products_path(store_id: current_user.stores.first.id)
+      end
+   else
+     store_path
+   end
+  end
+
+  def after_sign_out_path_for(resource)
+    root_path
+  end
+
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_in_params

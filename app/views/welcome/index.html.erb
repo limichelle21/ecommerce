@@ -5,11 +5,12 @@
 	
 
 	<% if current_user.present? %>
-		<%= link_to "Create Your Store", new_dashboard_store_path, class: "btn btn-success" %>
-	
-		
+		<% if current_user.stores.first == nil %>
+			<%= link_to "Create Your Store", new_dashboard_store_path, class: "btn btn-success" %>
+		<% else %>
+			<%= link_to "Dashboard", dashboard_store_products_path(store_id: current_user.stores.first.id), class: "btn btn-success" %>
+		<% end %>
+	<% else %>
+		<%= link_to "Sign Up Today", new_user_registration_path, class: "btn btn-success" %>
 	<% end %>
-
-
-	
 </div>
