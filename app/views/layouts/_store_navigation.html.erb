@@ -13,8 +13,8 @@
 		<ul class="nav navbar-nav navbar-right">
 	  		<% if current_user %>
 	  			<li><%= image_tag current_user.avatar_url(36), class: "gravatar" %></li>
-		  		<li><%= link_to current_user.email, user_session_path(current_user) %></li>
-		  		<li><%= link_to "Sign Out", store_sign_out_path(current_user), method: :delete %></li>
+		  		<li><%= current_user.email %></li>
+		  		<li><%= link_to "Sign Out", store_sign_out_path, method: :delete %></li>
 	  		<% else %>
 		  		<li><%= link_to 'Sign Up', store_sign_up_path %></li> 
 		  		<li><%= link_to 'Sign In', store_sign_in_path %></li>
