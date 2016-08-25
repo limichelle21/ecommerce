@@ -19,18 +19,6 @@ Stripe.api_key = ENV['stripe_api_key']
 			source: params[:stripeToken]
 			)
 
-		#create the charge in Stripe
-		charge = Stripe::Charge.create(
-			customer: @customer.id,
-			amount: @amount,
-			description: 'eCommerce Stripe Customer',
-			currency: 'usd'
-			)
-
-
-
-
-		# create a customer in ecommerce app - store Stripe Customer ID on Customer
 
 		@customer = Customer.where(email: params[:email])
 
@@ -46,6 +34,13 @@ Stripe.api_key = ENV['stripe_api_key']
 			@guest.save!
 		end
 
+		#create the charge in Stripe
+		charge = Stripe::Charge.create(
+			customer: @customer.id,
+			amount: @amount,
+			description: 'eCommerce Stripe Customer',
+			currency: 'usd'
+			)
 
 
 		@order = current_store.orders.build(

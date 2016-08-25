@@ -13,11 +13,11 @@ class CustomersController < ApplicationController
 
 	def create
 		@store = current_store
-		@customer = @store.customers.build(customer_params)
+		@customer = @store.customers.create(customer_params)
 
 		if @customer.save
 			flash[:notice] = "Welcome to #{current_store.name}!"
-			# create_session(@customer)
+			# create_session(@customer)			
 			redirect_to store_products_path
 		else
 			flash[:alert] = "There was an error creating your account. Please try again."

@@ -1,0 +1,19 @@
+<div class="main">
+  <h1>All Customers</h1>
+  	<table>
+      <thead>
+          <tr>
+            <th class="list-title">Customer</th>
+          </tr>
+      </thead>
+
+      <tbody>
+          <% @customers.each do |customer| %>
+          <tr>
+            <td class="list-item"><%= customer.email %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+</div>

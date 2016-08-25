@@ -1,11 +1,11 @@
 module SessionsHelper
 
 	def create_session(user)
-		session[:user_id] = user.id
+		session[:current_user_id] = user.id
 	end
 
 	def destroy_session(user)
-		session[:user_id] = nil
+		session[:current_user_id] = nil
 	end
 
 	# def current_user

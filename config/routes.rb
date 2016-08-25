@@ -12,6 +12,7 @@ Rails.application.routes.draw do
         resources :products
         resources :orders, only: [:index, :show, :destroy]
         resources :order_lines, only: [:index, :show]
+        resources :customers, only: [:index]
       end
   end
 

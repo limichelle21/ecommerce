@@ -6,8 +6,8 @@ class Order < ActiveRecord::Base
 	belongs_to :store
 	has_many :order_lines
 
-	validate :guest_present, allow_nil: true
-	validate :customer_present, allow_nil: true
+	validates :guest, presence: true, allow_nil: true
+	validates :customer, presence: true, allow_nil: true
 
 
 

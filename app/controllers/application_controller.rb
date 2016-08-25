@@ -18,11 +18,6 @@ class ApplicationController < ActionController::Base
   before_action :current_order
 
 
-  # def current_order_2
-  #   @store = Store.friendly.find(params[:store_id])
-  #   @current_order ||= session[:current_order_id] && @store.orders.find_by(id: session[:current_order_id])
-  # end
-
 
   def current_order 
     if current_store.present?
@@ -40,9 +35,11 @@ class ApplicationController < ActionController::Base
     @current_store = params[:store_id].present? ? Store.friendly.find(params[:store_id]) : nil
   end
 
+
   def current_user
     @current_user = User.find_by(id: session[:user_id])
   end
+
 
 
   def find_store

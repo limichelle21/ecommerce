@@ -1,6 +1,7 @@
-class ProductsController < ApplicationController
+ class ProductsController < ApplicationController
   layout 'customer'
 
+  skip_before_action :current_order
   before_action :get_store
 
 
