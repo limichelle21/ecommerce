@@ -1,6 +1,7 @@
 class Customer < User
 
-	belongs_to :store
+	has_many :memberships, :dependent => :destroy
+	has_many :stores, through: :memberships
 	has_many :orders
 
 end

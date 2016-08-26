@@ -1,14 +1,23 @@
 Rails.application.routes.draw do
 
 
-  devise_for :users, controllers: {
-    registrations: 'users/registrations',
-    sessions: 'users/sessions'
-  }
+  scope '/dashboard' do 
+    devise_for :users, controllers: {
+      registrations: 'users/registrations',
+      sessions: 'users/sessions'
+    }
+  end 
+
+  scope '/:store_id' do
+    devise_for :customers, controllers: {
+      registrations: 'customers/registrations',
+      sessions: 'customers/sessions'
+    }
+  end
 
   namespace :dashboard do 
       root 'products#index'
-      resources :stores, only: [:new, :create] do 
+      resources :stores, only: [:new, :create], path: '/' do 
         resources :products
         resources :orders, only: [:index, :show, :destroy]
         resources :order_lines, only: [:index, :show]
@@ -30,11 +39,11 @@ Rails.application.routes.draw do
   get ':store_id', to: 'stores#show', as: 'store'
   resources :stores, only: [:show], path: '/' do 
     # resources :users, only: [:new]
-    get '/users/sign_up' => 'customers#new', as: 'sign_up'
-    post '/users/sign_up' => 'customers#create', as: 'user_sign_up'
-    get '/users/sign_in' => 'sessions#new', as: 'sign_in'
-    post '/users/sign_in' => 'sessions#create'
-    delete '/users/sign_out' => 'sessions#destroy', as: 'sign_out'
+    # get '/users/sign_up' => 'customers#new', as: 'sign_up'
+    # post '/users/sign_up' => 'customers#create', as: 'user_sign_up'
+    # get '/users/sign_in' => 'sessions#new', as: 'sign_in'
+    # post '/users/sign_in' => 'sessions#create'
+    # delete '/users/sign_out' => 'sessions#destroy', as: 'sign_out'
     resource :cart, only: [:show]
     resources :products, only: [:index, :show]
     resources :orders, only: [:index, :show]

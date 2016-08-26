@@ -8,7 +8,8 @@ class Store < ActiveRecord::Base
 	has_many :products
 	has_many :orders
 	
-	has_many :customers
+	has_many :memberships, :dependent => :destroy
+	has_many :customers, through: :memberships
 
 	validates :owner, presence: true
 	validates :name, presence: true, uniqueness: true

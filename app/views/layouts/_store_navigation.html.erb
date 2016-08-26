@@ -11,13 +11,13 @@
 		 
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
-	  		<% if current_user.present? %>
-	  			<li><%= image_tag current_user.avatar_url(36), class: "gravatar" %></li>
-		  		<li><%= current_user.email %></li>
-		  		<li><%= link_to "Sign Out", store_sign_out_path, method: :delete %></li>
+	  		<% if current_customer.present? %>
+	  			<li><%= image_tag current_customer.avatar_url(36), class: "gravatar" %></li>
+		  		<li><%= link_to current_customer.email %></li>
+		  		<li><%= link_to "Sign Out", destroy_customer_session_path, method: :delete %></li>
 	  		<% else %>
-		  		<li><%= link_to 'Sign Up', store_sign_up_path %></li> 
-		  		<li><%= link_to 'Sign In', store_sign_in_path %></li>
+		  		<li><%= link_to 'Sign Up', new_customer_registration_path %></li> 
+		  		<li><%= link_to 'Sign In', new_customer_session_path %></li>
 		 	<% end %>
 		 	<% if current_order.present? %>
 			 	<li class="cart-text"><%= render partial: "layouts/cart_text" %></li>
