@@ -22,27 +22,31 @@ Stripe.api_key = ENV['stripe_api_key']
 
 		@customer = Customer.where(email: params[:email])
 
-		if current_user.present? 
-			if @customer.email == current_user.email
+
+		#current_customer is a Devise helper method 
+
+		if current_customer.present? 
+			if @customer.email == current_customer.email
 				@customer.assign_attributes(customer_params)
 				@customer.save!
 			else
 				flash[:alert] = "This email is associated with another account. Please sign into that account or provide a different email."
 			end
 		else
-			@guest = guests.create(guest_params)
+			@guest = Guest.create(guest_params)
 			@guest.save!
 		end
 
 		#create the charge in Stripe
 		charge = Stripe::Charge.create(
-			customer: @customer.id,
+			customer: @customer.id || @guest.id
 			amount: @amount,
 			description: 'eCommerce Stripe Customer',
 			currency: 'usd'
 			)
 
 
+# how to save either customer id or guest id to the order? 
 		@order = current_store.orders.build(
 			customer_id: @customer.id,
 			guest_id: @guest.id,

@@ -10,6 +10,7 @@ skip_before_action :current_order
   # POST /resource/sign_in
   def create
     super
+    # need to check if customer has access (membership) to the current_store or not
   end
 
   # DELETE /resource/sign_out
