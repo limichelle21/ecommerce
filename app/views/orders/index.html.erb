@@ -1,0 +1,27 @@
+<div class="main">
+  <h1>Your Orders</h1>
+  	<table>
+      <thead>
+          <tr>
+            <th class="list-title">Order ID</th>
+            <th class="list-title">Date Created</th>
+            <th class="list-title">Total Price</th>
+            <th class="list-title">
+              Order Details</th>
+          </tr>
+      </thead>
+
+      <tbody>
+          <% @orders.each do |order| %>
+          <tr>
+            <td class="list-item"><%= order.id %></td>
+            <td class="list-item"><%= order.created_at %></td>
+            <td class="list-item"><%= order.price_in_cents %></td>
+            <td class="list-item"><%= link_to 'Show', store_order_path(@store.id, order.id) %></td>
+           
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+</div>

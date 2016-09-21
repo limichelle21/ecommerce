@@ -1,0 +1,74 @@
+.welcome-content {
+    background-image: url(/app/assets/images/macbook-computer-clean-hero.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    position: relative;
+    min-height: 400px;
+}
+
+.welcome-content .welcome-title {
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    text-align: center;
+    font-size: 5rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.7rem;
+    text-shadow: 1px 1px 0px white;
+    color: forestgreen;
+}
+
+.welcome-content .welcome-subtitle {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 300; 
+}
+
+.selling-points {
+    position: relative;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 64rem;
+}
+
+.point {
+    position: relative;
+    padding: 4rem;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+
+.point .point-title {
+    font-size: 3rem;
+    padding-bottom: 1rem;
+}
+
+.point .point-description {
+    color: black;
+    font-size: 1.5rem;
+}
+
+.sign-up {
+    position: absolute;
+    text-transform: uppercase;
+    left: 50%;
+    top: 50%;
+    padding-top: 2rem;
+    text-decoration: none;
+    border-bottom: none;
+    font-size: 3rem;
+    color: black;
+}
+
+
+.ion-monitor, .ion-person-stalker, .ion-bag {
+    color: forestgreen;
+    font-size: 5rem;
+}

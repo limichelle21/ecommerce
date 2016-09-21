@@ -15,6 +15,7 @@
 	  			<li><%= image_tag current_customer.avatar_url(36), class: "gravatar" %></li>
 		  		<li><%= link_to current_customer.email %></li>
 		  		<li><%= link_to "Sign Out", destroy_customer_session_path, method: :delete %></li>
+		  		<li><%= link_to "Orders", store_orders_path %></li>
 	  		<% else %>
 		  		<li><%= link_to 'Sign Up', new_customer_registration_path %></li> 
 		  		<li><%= link_to 'Sign In', new_customer_session_path %></li>

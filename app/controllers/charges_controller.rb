@@ -13,50 +13,58 @@ Stripe.api_key = ENV['stripe_api_key']
 
 		@amount = current_order.subtotal * 100
 
-		#create customer in Stripe
-		customer = Stripe::Customer.create(
-			email: params[:email],
-			source: params[:stripeToken]
-			)
-
-
-		@customer = Customer.where(email: params[:email])
-
 
 		#current_customer is a Devise helper method 
 
-		if current_customer.present? 
-			if @customer.email == current_customer.email
-				@customer.assign_attributes(customer_params)
-				@customer.save!
-			else
-				flash[:alert] = "This email is associated with another account. Please sign into that account or provide a different email."
-			end
-		else
-			@guest = Guest.create(guest_params)
-			@guest.save!
-		end
-
-		#create the charge in Stripe
-		charge = Stripe::Charge.create(
-			customer: @customer.id || @guest.id
+		charge_params = {
 			amount: @amount,
 			description: 'eCommerce Stripe Customer',
 			currency: 'usd'
-			)
+		}
 
-
-# how to save either customer id or guest id to the order? 
-		@order = current_store.orders.build(
-			customer_id: @customer.id,
-			guest_id: @guest.id,
-			charge_id: charge.id,
+		order_params = {
 			completed: true,
 			total: @amount,
 			date_paid: Date.today.to_s
-			 )
-		@order.save!
+		}
+ 
 
+		if current_customer.present? 
+			if current_customer.stripe_id.present?
+				# retrieve Stripe customer 
+				customer = Stripe::Customer.retrieve(current_customer.stripe_id)
+			else
+				customer = Stripe::Customer.create(
+					email: current_customer.email,
+					source: params[:stripeToken]
+					)
+				current_customer.assign_attributes(stripe_id: customer.id)
+			end
+			current_customer.assign_attributes(customer_params)
+			current_customer.save!
+			charge_params[:customer] = customer["id"]
+		else
+			@guest = Guest.create(guest_params)
+			@guest.save!
+			charge_params[:source] = params[:stripeToken]
+		end
+
+
+		# create the charge in Stripe - this will charge the user's card
+		charge = Stripe::Charge.create(charge_params)
+
+		if current_customer.present?
+			order_params[:charge] = charge.id
+			order_params[:customer] = current_customer.id 
+			@order = current_store.orders.build(order_params)
+		else
+			order_params[:charge] = charge.id
+			order_params[:guest] = @guest.id
+			@order = current_store.orders.build(order_params)
+		end
+
+		@order.save!
+				
 
 
 		flash[:notice] = "Thanks for placing your order."

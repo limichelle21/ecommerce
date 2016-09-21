@@ -11,7 +11,7 @@
 
 	<h2>Your Order</h2>
 
-	<% if @order.customer == current_user %>
+	<% if @order.customer == current_customer %>
 		<%= render 'order_lines/order_line_row' %>
 	<% end %>
 		

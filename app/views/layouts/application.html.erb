@@ -5,6 +5,7 @@
     <title><%= content_for?(:title) ? yield(:title) : "eCommerce" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "eCommerce Platform" %>">
     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+    <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>

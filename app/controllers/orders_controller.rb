@@ -4,7 +4,9 @@ class OrdersController < ApplicationController
 	before_action :get_store, only: [:index, :show]
 
 	def index
-		@orders = @store.orders.all
+		# @orders = @store.orders.all
+		customer = Customer.find(params[:current_customer_id)
+		@orders = customer.orders.all 
 	end
 
 	def show
@@ -26,6 +28,9 @@ class OrdersController < ApplicationController
   def get_store
   	@store = Store.friendly.find(params[:store_id])
   end
+
+  # need to scope based on customer (store, then customer)
+
 
 end
 

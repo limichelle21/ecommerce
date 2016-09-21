@@ -1,16 +1,32 @@
-<div class="container">
-	<h1>Welcome to the eCommerce Platform</h1>
-	<p>We enable small business owners to establish an online presence.</p>
-	<p>List and sell your products in your online storefront.</p>
-	
-
-	<% if current_user.present? %>
-		<% if current_user.stores.first == nil %>
-			<%= link_to "Create Your Store", new_dashboard_store_path, class: "btn btn-success" %>
-		<% else %>
-			<%= link_to "Dashboard", dashboard_store_products_path(store_id: current_user.stores.first.id), class: "btn btn-success" %>
-		<% end %>
-	<% else %>
-		<%= link_to "Sign Up Today", new_user_registration_path, class: "btn btn-success" %>
-	<% end %>
-</div>
+<section class="welcome-content">
+    <h1 class="welcome-title">eCommerce</h1>
+    <h3 class="welcome-subtitle">Welcome to the eCommerce Platform</h3>
+    <section class="sign-up">
+        <% if current_user.present? %>
+            <% if current_user.stores.first == nil %>
+                <%= link_to "Create Your Store", new_dashboard_store_path, class: "btn btn-custom" %>
+            <% else %>
+                <%= link_to "Dashboard", dashboard_store_products_path(store_id: current_user.stores.first.id), class: "btn btn-custom" %>
+            <% end %>
+        <% else %>
+            <%= link_to "Sign Up Today", new_user_registration_path, class: "btn btn-custom" %>
+        <% end %>
+    </section>
+</section>
+<section class="selling-points container clearfix">
+    <div class="point col-md-4">
+        <span class="ion-monitor"></span>
+        <h5 class="point-title">Get Online</h5>
+        <p class="point-description">We enable small business owners to establish an online presence quickly and easily.</p>
+    </div>
+    <div class="point col-md-4">
+        <span class="ion-person-stalker"></span>
+        <h5 class="point-title">Wide Network of Customers</h5>
+        <p class="point-description">Tap into eCommerce's wide network of customers.</p>
+    </div>
+    <div class="point col-md-4">
+        <span class="ion-bag"></span>
+        <h5 class="point-title">Sell More</h5>
+        <p class="point-description">Sell an unlimited number of SKUs.</p>
+    </div>
+</section>
