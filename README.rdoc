@@ -2,9 +2,21 @@
 
 This is a capstone Rails application created as part of the Bloc curriculum. 
 
-* It is a basic e-commerce platform allowing owners to create their own online storefronts.
+* It is a basic e-commerce platform connecting owners with customers. 
 
+Owners can:
+* create an online store
+* add, update, and delete products
+* view orders
+
+Customers can:
+* add products to cart
+* checkout and confirm order
+
+Additional information:
 * Stripe used for payment processing. 
+* Bootstrap used for styling.
+* Devise for user authentication.
 
 
 
