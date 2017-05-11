@@ -1,5 +1,5 @@
 class ChargesController < ApplicationController
-
+    
 require 'stripe'
 Stripe.api_key = ENV['stripe_api_key']
 
@@ -29,8 +29,8 @@ Stripe.api_key = ENV['stripe_api_key']
 		}
  
 
-		if current_customer.present? 
-			if current_customer.stripe_id.present?
+		if @current_customer.present? 
+			if @current_customer.stripe_id.present?
 				# retrieve Stripe customer 
 				customer = Stripe::Customer.retrieve(current_customer.stripe_id)
 			else
@@ -38,10 +38,10 @@ Stripe.api_key = ENV['stripe_api_key']
 					email: current_customer.email,
 					source: params[:stripeToken]
 					)
-				current_customer.assign_attributes(stripe_id: customer.id)
+				@current_customer.assign_attributes(stripe_id: customer.id)
 			end
-			current_customer.assign_attributes(customer_params)
-			current_customer.save!
+			@current_customer.assign_attributes(customer_params)
+			@current_customer.save!
 			charge_params[:customer] = customer["id"]
 		else
 			@guest = Guest.create(guest_params)
@@ -53,7 +53,7 @@ Stripe.api_key = ENV['stripe_api_key']
 		# create the charge in Stripe - this will charge the user's card
 		charge = Stripe::Charge.create(charge_params)
 
-		if current_customer.present?
+		if @current_customer.present?
 			order_params[:charge] = charge.id
 			order_params[:customer] = current_customer.id 
 			@order = current_store.orders.build(order_params)
@@ -79,6 +79,9 @@ Stripe.api_key = ENV['stripe_api_key']
 			flash[:notice] = "Please try again"
 	
 	end
+    
+    
+    
 
 	private
 

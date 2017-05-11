@@ -16,8 +16,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_order
   before_action :current_order
-
-
+    
 
   def current_order 
     if current_store.present?
@@ -35,7 +34,7 @@ class ApplicationController < ActionController::Base
     @current_store = params[:store_id].present? ? Store.friendly.find(params[:store_id]) : nil
   end
 
-
+    
 
   def find_store
   	whitelist_subdomains = %w(www ecommerce)

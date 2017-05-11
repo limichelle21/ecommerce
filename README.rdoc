@@ -10,6 +10,7 @@ Owners can:
 * view orders
 
 Customers can:
+* sign up for an account
 * add products to cart
 * checkout and confirm order
 
