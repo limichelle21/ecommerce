@@ -43,7 +43,10 @@ customers = Customer.all
 20.times do
 	store = Store.create!(
 		owner: owners.sample,
-		name: Faker::Company.name
+		name: Faker::Company.name,
+        description: Faker::Lorem.paragraph(3),
+        about: Faker::Lorem.sentence(1),
+        action_call: Faker::Company.catch_phrase
 		)
 end
 

@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   namespace :dashboard do 
       root 'products#index'
-      resources :stores, only: [:new, :create], path: '/' do 
+      resources :stores, only: [:new, :create, :edit, :update], path: '/' do 
         resources :products
         resources :orders, only: [:index, :show, :destroy]
         resources :order_lines, only: [:index, :show]

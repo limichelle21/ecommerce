@@ -24,6 +24,7 @@
   <ul class="sidebar-menu">
 
     <% if current_store.present? %>
+     <li><%= link_to "Edit Store Information", edit_dashboard_store_path(current_store) %></li> 
      <li><%= link_to "All Products", dashboard_store_products_path(current_store) %></li>
      <li><%= link_to "All Orders", dashboard_store_orders_path(current_store) %></li>
      <li><%= link_to "All Customers", dashboard_store_customers_path(current_store) %></li>

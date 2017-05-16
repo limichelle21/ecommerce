@@ -27,21 +27,20 @@ Stripe.api_key = ENV['stripe_api_key']
 			total: @amount,
 			date_paid: Date.today.to_s
 		}
- 
-
-		if @current_customer.present? 
-			if @current_customer.stripe_id.present?
+      
+		if current_customer.present? 
+			if current_customer.stripe_id.present?
 				# retrieve Stripe customer 
-				customer = Stripe::Customer.retrieve(current_customer.stripe_id)
+				customer = Stripe::Customer.retrieve(current_customer.stripe_id.to_s)
 			else
 				customer = Stripe::Customer.create(
 					email: current_customer.email,
 					source: params[:stripeToken]
 					)
-				@current_customer.assign_attributes(stripe_id: customer.id)
+				current_customer.assign_attributes(stripe_id: customer.id)
 			end
-			@current_customer.assign_attributes(customer_params)
-			@current_customer.save!
+			current_customer.assign_attributes(customer_params)
+			current_customer.save!
 			charge_params[:customer] = customer["id"]
 		else
 			@guest = Guest.create(guest_params)
@@ -53,13 +52,15 @@ Stripe.api_key = ENV['stripe_api_key']
 		# create the charge in Stripe - this will charge the user's card
 		charge = Stripe::Charge.create(charge_params)
 
-		if @current_customer.present?
+		if current_customer.present?
 			order_params[:charge] = charge.id
 			order_params[:customer] = current_customer.id 
+            order_params[:price_in_cents] = @amount
 			@order = current_store.orders.build(order_params)
 		else
 			order_params[:charge] = charge.id
 			order_params[:guest] = @guest.id
+            order_params[:price_in_cents] = @amount
 			@order = current_store.orders.build(order_params)
 		end
 
@@ -98,6 +99,9 @@ Stripe.api_key = ENV['stripe_api_key']
 	  	params.permit(:name, :street_address, :city, :state, :zip_code, :phone_number, :email)
 	  end
 
+      def order_params
+        params.permit(:order).permit(:customer, :price_in_cents, :completed, :date_paid, :charge, :guest)
+      end    
 
 
 end

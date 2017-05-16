@@ -1,9 +1,9 @@
 <div class="container">
-	<h1>Create Your Store</h1>
+	<h1>Update Your Store</h1>
 	<div class="row">
 		
 		<div class="container">
-			<%= form_for :store, url: dashboard_stores_path do |f| %>
+			<%= form_for(@store, url: dashboard_store_path, method: :patch) do |f| %>
 
 				<% if @store.errors.any? %>
 					<div class="alert alert-danger">
@@ -22,17 +22,17 @@
 				<% end %>
             
                 <%= form_group_tag(@store.errors[:description]) do %>
-					<%= f.label :description %>
+					<%= f.label :store_description %>
 					<%= f.text_field :about, class: 'form-control', placeholder: "Brief description about your store" %>
 				<% end %>
             
                 <%= form_group_tag(@store.errors[:about]) do %>
-					<%= f.label :about %>
+					<%= f.label :store_about %>
 					<%= f.text_field :description, class: 'form-control', placeholder: "What is your story?" %>
 				<% end %>
             
                 <%= form_group_tag(@store.errors[:action_call]) do %>
-					<%= f.label :action_call %>
+					<%= f.label :store_action_call %>
 					<%= f.text_field :action_call, class: 'form-control', placeholder: "Place your call to action here" %>
 				<% end %>
 
@@ -44,7 +44,10 @@
 					<%= f.submit "Save", class: 'btn btn-success' %>
 				</div>
 
-			<% end %>
+			
+            <% end %>
+            
+            
 		</div>
 	</div>
 </div>

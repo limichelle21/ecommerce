@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
 
 	def index
 		# @orders = @store.orders.all
-		customer = Customer.find(params[:current_customer_id)
+		customer = Customer.find(params[:current_customer_id])
 		@orders = customer.orders.all 
 	end
 
@@ -21,9 +21,9 @@ class OrdersController < ApplicationController
 
  private
   
-  # def order_params
-  #    params.require(:order).permit(:customer, :total, :completed, :date_paid)
-  # end
+#   def order_params
+#      params.permit(:order).permit(:customer, :price_in_cents, :completed, :date_paid, :charge, :guest)
+#   end
 
   def get_store
   	@store = Store.friendly.find(params[:store_id])

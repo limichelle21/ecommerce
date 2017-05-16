@@ -32,7 +32,7 @@
         <%= telephone_field_tag :phone_number, nil, class: "form-control" %>
       </div>
 
-      <% if current_customer.empty? %>
+      <% if current_customer.blank? %>
           <div class="form-group">
             <%= label_tag :email %>
             <%= email_field_tag :email, nil, class: "form-control" %>

@@ -23,29 +23,29 @@ class Dashboard::StoresController < DashboardController
   	end
 
 		
- #  	def edit
- #  		@store = Store.friendly.find(params[:id])
- #  	end
+   	def edit
+   		@store = Store.friendly.find(params[:id])
+   	end
 	
 
-	# def update
-	# 	@store = Store.friendly.find(params[:id])
-	# 	@store.assign_attributes(store_params)
+	 def update
+	 	@store = Store.friendly.find(params[:id])
+	 	@store.assign_attributes(store_params)
 
-	# 	if @store.save
-	# 		flash[:notice] = "Store was updated."
-	# 		redirect_to dashboard_store_products_path
-	# 	else
-	# 		flash[:error] = "There was an error updating the store. Please try again."
-	# 		render :edit
-	# 	end
-	# end
+	 	if @store.save
+	 		flash[:notice] = "Store was updated."
+	 		redirect_to dashboard_store_products_path
+	 	else
+	 		flash[:error] = "There was an error updating the store. Please try again."
+	 		render :edit
+	 	end
+	 end
 
 
   private
 
   def store_params
-    params.require(:store).permit(:name, :owner_id)
+    params.require(:store).permit(:name, :owner_id, :description, :about, :action_call)
   end
 
 	
