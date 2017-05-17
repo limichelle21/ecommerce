@@ -27,7 +27,7 @@ class Users::SessionsController < Devise::SessionsController
         dashboard_store_products_path(store_id: current_user.stores.first.id)
       end
    else
-     store_path
+     stored_location_for(resource) || request.referer || root_path
    end
   end
 

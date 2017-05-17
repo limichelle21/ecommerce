@@ -1,5 +1,8 @@
 class ChargesController < ApplicationController
     
+layout 'customer'    
+before_action :authenticate_customer!    
+    
 require 'stripe'
 Stripe.api_key = ENV['stripe_api_key']
 
@@ -24,7 +27,7 @@ Stripe.api_key = ENV['stripe_api_key']
 
 		order_params = {
 			completed: true,
-			total: @amount,
+			price_in_cents: @amount,
 			date_paid: Date.today.to_s
 		}
       

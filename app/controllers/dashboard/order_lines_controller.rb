@@ -1,5 +1,6 @@
 class Dashboard::OrderLinesController < DashboardController
 
+    before_action :authenticate_owner!
 	before_action :get_store, only: [:index, :show]
 
 	def index

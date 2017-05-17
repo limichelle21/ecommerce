@@ -1,5 +1,6 @@
 class Dashboard::StoresController < DashboardController
 
+    before_action :authenticate_owner!
 
 	def show
 		@store = Store.friendly.find(params[:id])

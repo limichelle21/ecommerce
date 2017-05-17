@@ -1,7 +1,7 @@
 class Dashboard::CustomersController < DashboardController
 
 before_action :get_store
-
+before_action :authenticate_owner!
 
 def index
 	@customers = @store.customers.all

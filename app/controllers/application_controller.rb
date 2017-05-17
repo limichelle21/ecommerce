@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   
   protect_from_forgery with: :exception
 
-  # before_action :authenticate_user!
+#  before_action :authenticate_user!
   before_filter :find_store
  
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -24,6 +24,7 @@ class ApplicationController < ActionController::Base
         @current_order = current_store.orders.find_by(id: session["current_order_id_#{current_store.id}"])
       else
         @current_order = current_store.orders.create
+        session["current_order_id_#{current_store.id}"] = @current_order.id  
       end
     else
       nil

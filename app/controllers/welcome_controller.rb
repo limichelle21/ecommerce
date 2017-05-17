@@ -1,7 +1,7 @@
 class WelcomeController < ApplicationController
 
-skip_before_action :current_order
-
+skip_before_action :authenticate_user!
+    
 	def index
 	end
 

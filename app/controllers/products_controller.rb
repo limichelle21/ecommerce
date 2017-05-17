@@ -1,7 +1,7 @@
  class ProductsController < ApplicationController
   layout 'customer'
 
-  skip_before_action :current_order
+  before_action :authenticate_customer!
   before_action :get_store
 
 

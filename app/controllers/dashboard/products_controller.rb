@@ -1,5 +1,6 @@
 class Dashboard::ProductsController < DashboardController
 
+  before_action :authenticate_owner!
   before_action :get_store
 
   after_filter { flash.discard if request.xhr? }

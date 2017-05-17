@@ -3,7 +3,7 @@
 <div class="jumbotron">
 	<div class="container">
 	    <h1><%= @store.name %></h1>
-	    <p> Update store description here </p>
+	    <p> <%= @store.description %></p>
 	    <p class="btn btn-default btn-lg" role="button"><%= link_to 'Shop Now', store_products_path(@store.id) %></p>
 	</div>
 </div>
@@ -46,7 +46,7 @@
 <div class="container">
 	<div class="jumbotron-secondary">
 		<h1>About Your Store</h1>
-		<p>Tell customers about your store's story.</p>
+		<p><%= @store.about %></p>
 	</div>
 </div>
 
@@ -69,7 +69,7 @@
 
 <div class="container">
 	<div class="jumbotron-secondary">
-		<h1>Place your store's Call to Action or additional information.</h1>
+		<h1><%= @store.action_call %></h1>
 	</div>
 </div>
 
