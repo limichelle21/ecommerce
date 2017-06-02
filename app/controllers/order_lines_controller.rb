@@ -2,8 +2,8 @@ class OrderLinesController < ApplicationController
 
 	layout 'customer'
 	before_action :get_store, only: [:create, :update, :destroy]
-    before_action :authenticate_customer!
 
+    
 	after_filter { flash.discard if request.xhr? }
 
 	def create

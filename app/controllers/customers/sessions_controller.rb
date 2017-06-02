@@ -10,6 +10,7 @@ skip_before_action :current_order
   # POST /resource/sign_in
   def create
     super
+    @customer = current_customer
     # need to check if customer has access (membership) to the current_store or not
   end
 

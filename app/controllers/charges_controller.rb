@@ -1,8 +1,7 @@
 class ChargesController < ApplicationController
-    
-layout 'customer'    
-before_action :authenticate_customer!    
-    
+
+layout 'customer'
+
 require 'stripe'
 Stripe.api_key = ENV['stripe_api_key']
 
@@ -12,12 +11,11 @@ Stripe.api_key = ENV['stripe_api_key']
 
 	# create the actual charge by calling Stripe API
 	def create
-		# amount in cents
 
+		# amount in cents
 		@amount = current_order.subtotal * 100
 
-
-		#current_customer is a Devise helper method 
+		#current_customer is a Devise helper method
 
 		charge_params = {
 			amount: @amount,
@@ -30,10 +28,10 @@ Stripe.api_key = ENV['stripe_api_key']
 			price_in_cents: @amount,
 			date_paid: Date.today.to_s
 		}
-      
-		if current_customer.present? 
+
+		if current_customer.present?
 			if current_customer.stripe_id.present?
-				# retrieve Stripe customer 
+				# retrieve Stripe customer
 				customer = Stripe::Customer.retrieve(current_customer.stripe_id.to_s)
 			else
 				customer = Stripe::Customer.create(
@@ -56,42 +54,42 @@ Stripe.api_key = ENV['stripe_api_key']
 		charge = Stripe::Charge.create(charge_params)
 
 		if current_customer.present?
-			order_params[:charge] = charge.id
-			order_params[:customer] = current_customer.id 
-            order_params[:price_in_cents] = @amount
+			order_params[:charge_id] = charge.id
+			order_params[:customer_id] = current_customer.id
+      order_params[:price_in_cents] = @amount
 			@order = current_store.orders.build(order_params)
 		else
-			order_params[:charge] = charge.id
+			order_params[:charge_id] = charge.id
 			order_params[:guest] = @guest.id
-            order_params[:price_in_cents] = @amount
+      order_params[:price_in_cents] = @amount
 			@order = current_store.orders.build(order_params)
 		end
 
 		@order.save!
-				
+
 
 
 		flash[:notice] = "Thanks for placing your order."
 		clear_cart
-		redirect_to store_confirmation_path
-		
+
+
 		# if charge was successful or not
 
-		rescue Stripe::CardError => e 
+		rescue Stripe::CardError => e
 			flash[:error] = e.message
 			redirect_to new_store_charge_path
 			flash[:notice] = "Please try again"
-	
+
 	end
-    
-    
-    
+
+
+
 
 	private
 
 	  def clear_cart
 	  	session["current_order_id_#{current_store.id}"] = nil
-	  	redirect_to store_path
+	  	redirect_to store_confirmation_path(current_store.id, @order.id)
 	  end
 
 	  def customer_params
@@ -102,9 +100,9 @@ Stripe.api_key = ENV['stripe_api_key']
 	  	params.permit(:name, :street_address, :city, :state, :zip_code, :phone_number, :email)
 	  end
 
-      def order_params
-        params.permit(:order).permit(:customer, :price_in_cents, :completed, :date_paid, :charge, :guest)
-      end    
+    def order_params
+      params.permit(:order).permit(:customer, :price_in_cents, :completed, :date_paid, :charge_id, :guest)
+    end
 
 
 end

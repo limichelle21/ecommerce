@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170516223857) do
+ActiveRecord::Schema.define(version: 20170602160810) do
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 20170516223857) do
     t.datetime "updated_at",     null: false
     t.integer  "customer_id"
     t.integer  "store_id"
-    t.integer  "charge_id"
+    t.string   "charge_id"
     t.integer  "guest_id"
   end
 
@@ -123,7 +123,7 @@ ActiveRecord::Schema.define(version: 20170516223857) do
     t.integer  "store_id"
     t.string   "state"
     t.string   "zip_code"
-    t.integer  "stripe_id"
+    t.string   "stripe_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

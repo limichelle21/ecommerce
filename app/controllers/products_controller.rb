@@ -1,7 +1,6 @@
  class ProductsController < ApplicationController
   layout 'customer'
 
-  before_action :authenticate_customer!
   before_action :get_store
 
 
