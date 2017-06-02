@@ -1,6 +1,6 @@
 class Dashboard::ProductsController < DashboardController
 
-  before_action :authenticate_owner!
+  # before_action :authenticate_owner!, except: [:index, :new]
   before_action :get_store
 
   after_filter { flash.discard if request.xhr? }
@@ -44,7 +44,7 @@ class Dashboard::ProductsController < DashboardController
   def update
     @product = Product.friendly.find(params[:id])
     authorize @product
-    
+
     @product.assign_attributes(product_params)
 
     if @product.save
@@ -67,9 +67,12 @@ class Dashboard::ProductsController < DashboardController
     end
     @products = @store.products.all
 
-    respond_to do |format|
-      format.html
-      format.js
+    if @product.delete
+      flash[:notice] = "Product was deleted."
+      redirect_to dashboard_store_products_path
+    else
+      flash[:error] = "There was an error deleting the product. Please try again."
+      render :index
     end
   end
 
@@ -77,7 +80,7 @@ class Dashboard::ProductsController < DashboardController
   private
 
   def product_params
-    params.require(:product).permit(:title, :description, :sku, :price_in_cents, :count)
+    params.require(:product).permit(:title, :description, :sku, :price_in_cents, :count, :image, :remove_image)
   end
 
 

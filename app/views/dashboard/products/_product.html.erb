@@ -37,7 +37,13 @@
 		<% end %>
 
 		<%= form_group_tag(product.errors[:count]) do %>
-			<%= f.file_field :picture %>
+			<%= f.label :image %>
+			<%= f.file_field :image %>
+			<% if f.object.image? %>
+				<%= image_tag f.object.image.thumb.url %>
+				<%= f.label :remove_image %>
+				<%= f.check_box :remove_image %>
+			<% end %>
 		<% end %>
 
 

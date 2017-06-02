@@ -3,7 +3,7 @@ class Product < ActiveRecord::Base
 	extend FriendlyId
 	friendly_id :title, use: :slugged
 
-	mount_uploader :avatar, AvatarUploader
+	mount_uploader :image, ImageUploader
 
 	belongs_to :store
 	has_many :order_lines
@@ -19,7 +19,7 @@ class Product < ActiveRecord::Base
 	# Add a boolean :active to indicate if product is live or not?
 
 	def price # getter for rent in cents
-		read_attribute(:price_in_cents) 
+		read_attribute(:price_in_cents)
 	end
 
 	def price=(v) # setter for rent in cents

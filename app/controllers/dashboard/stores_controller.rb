@@ -1,6 +1,6 @@
 class Dashboard::StoresController < DashboardController
 
-    before_action :authenticate_owner!
+    before_action :authenticate_owner!, only: [:edit, :update]
 
 	def show
 		@store = Store.friendly.find(params[:id])
@@ -13,7 +13,7 @@ class Dashboard::StoresController < DashboardController
 	def create
 		@owner = current_user
 		@store = @owner.stores.build(store_params)
-		
+
 		if @store.save
 			flash[:notice] = "Store was created."
 	  		redirect_to dashboard_store_products_path(@store.id)
@@ -23,11 +23,11 @@ class Dashboard::StoresController < DashboardController
 	    end
   	end
 
-		
+
    	def edit
    		@store = Store.friendly.find(params[:id])
    	end
-	
+
 
 	 def update
 	 	@store = Store.friendly.find(params[:id])
@@ -49,6 +49,6 @@ class Dashboard::StoresController < DashboardController
     params.require(:store).permit(:name, :owner_id, :description, :about, :action_call)
   end
 
-	
+
 
 end

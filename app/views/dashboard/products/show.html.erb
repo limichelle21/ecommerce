@@ -5,14 +5,17 @@
 		</div>
 		<div class="col-md-5 col-md-offset-2">
 			<div id="product-title">
-				<h1><%= @product.title %></h1> 
+				<h1><%= @product.title %></h1>
 			</div>
-			<div id="product-price">	
+			<div id="product-price">
 				<h4>Price: $<%= @product.price %></h4>
 			</div>
 			<div id="product-description">
 				<h4 class="lead"><%= @product.description %></h4>
-			</div>		
+			</div>
+			<div id="product-image">
+				<h4 class="lead"><%= image_tag @product.image.thumb.url %></h4>
+			</div>
 			<h4><%= link_to 'Edit Product', edit_dashboard_store_product_path(current_store.id, @product.id), class: 'btn btn-success' %></h4>
         	<br />
 

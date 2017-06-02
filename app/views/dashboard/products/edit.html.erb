@@ -5,7 +5,7 @@
 			<h4>Edit Product Details</h4>
 		</div>
 		<div class="col-md-9" id="product-input">
-			
+
 		<%= form_for(@product, url: dashboard_store_product_path, method: :patch) do |f| %>
 
 			<% if @product.errors.any? %>
@@ -45,7 +45,13 @@
 			<% end %>
 
 			<%= form_group_tag(@product.errors[:count]) do %>
-				<%= f.file_field :picture %>
+				<%= f.label :image %>
+				<%= f.file_field :image %>
+				<% if f.object.image? %>
+					<%= image_tag f.object.image.thumb.url %>
+					<%= f.label :remove_image %>
+					<%= f.check_box :remove_image %>
+				<% end %>
 			<% end %>
 
 
