@@ -8,7 +8,6 @@ Bundler.require(*Rails.groups)
 
 require 'carrierwave'
 require 'carrierwave/orm/activerecord'
-require 'fog/aws'
 
 module Ecommerce
   class Application < Rails::Application
